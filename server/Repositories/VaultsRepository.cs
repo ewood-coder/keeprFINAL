@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace keeprFINAL.Repositories;
 
 // NOTE: ONLY USE THIS LINE IF YOU PLAN ON USING LINE 1
-// public class RestaurantsRepository : IRepository<Restaurant>
+// public class VaultsRepository : IRepository<Vault>
 public class VaultsRepository
 {
 	private readonly IDbConnection _db;
