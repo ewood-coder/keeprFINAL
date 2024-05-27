@@ -6,12 +6,15 @@ public class VaultsController : ControllerBase
 {
 	private readonly VaultsService _vaultsService;
 	private readonly Auth0Provider _auth0Provider;
+	private readonly VaultKeepsService _vaultKeepsService;
 
 
-	public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider)
+
+	public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider, VaultKeepsService vaultKeepsService)
 	{
 		_vaultsService = vaultsService;
 		_auth0Provider = auth0Provider;
+		_vaultKeepsService = vaultKeepsService;
 	}
 
 
@@ -111,6 +114,24 @@ public class VaultsController : ControllerBase
 
 			string message = _vaultsService.DestroyVault(vaultId, userInfo.Id);
 			return Ok(message);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
+
+
+
+	// STUB: GET KEEPS IN PUBLIC✅ VAULT
+	[Authorize]
+	[HttpGet("{vaultId}/keeps")]
+	public ActionResult<List<VaultKeep>> GetKeepsByPublicVaultId(int vaultId)
+	{
+		try
+		{
+			List<VaultKeep> vaultKeeps = _vaultKeepsService.GetKeepsByPublicVaultId(vaultId);
+			return Ok(vaultKeeps);
 		}
 		catch (Exception exception)
 		{
