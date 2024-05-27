@@ -123,15 +123,17 @@ public class VaultsController : ControllerBase
 
 
 
-	// STUB: GET KEEPS IN PUBLIC✅ VAULT
+	// STUB: GET KEEPS BY VAULT ID
 	[Authorize]
 	[HttpGet("{vaultId}/keeps")]
-	public ActionResult<List<VaultKeep>> GetKeepsByPublicVaultId(int vaultId)
+	public async Task<ActionResult<List<VaultKeep>>> GetKeepsByVaultId(int vaultId)
 	{
 		try
 		{
-			List<VaultKeep> vaultKeeps = _vaultKeepsService.GetKeepsByPublicVaultId(vaultId);
-			return Ok(vaultKeeps);
+			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+
+			List<K> keeps = _vaultKeepsService.GetKeepsByVaultId(vaultId, userInfo.Id);
+			return Ok(keeps);
 		}
 		catch (Exception exception)
 		{

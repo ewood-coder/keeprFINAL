@@ -39,13 +39,9 @@ public class VaultKeepsController : ControllerBase
 
 
 
-	// STUB: GET KEEPS IN PUBLIC ✅ VAULT
+	// STUB: GET KEEPS BY VAULT ID
 
 
 
-	// STUB: GET KEEPS IN PRIVATE ❌ VAULT
-
-
-
-	// STUB: CREATE VAULTKEEP
+	// STUB: DELETE VAULTKEEP
 }

@@ -24,17 +24,14 @@ public class VaultKeepsService
 
 
 
-	// STUB: GET KEEPS IN PUBLIC✅ VAULT
-	internal List<VaultKeep> GetKeepsByPublicVaultId(int vaultId)
+	// STUB: GET KEEPS BY VAULT ID
+	internal List<Keep> GetKeepsByVaultId(int vaultId, string userId)
 	{
-		List<VaultKeep> vaultKeeps = _vaultKeepsRepository.GetKeepsByPublicVaultId(vaultId);
-		return vaultKeeps;
+		List<Keep> keeps = _vaultKeepsRepository.GetKeepsByVaultId(vaultId, userId);
+		return keeps;
 	}
 
 
-	// STUB: GET KEEPS IN PRIVATE❌ VAULT
 
-
-
-	// STUB: CREATE VAULTKEEP
+	// STUB: DELETE VAULTKEEP
 }

@@ -45,43 +45,48 @@ public class VaultKeepsRepository
 			return vaultKeep;
 		}, vaultKeepData).FirstOrDefault();
 
-		// VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, new {vaultKeepData} =>
-		// {
-		// 	return vaultKeep;
-		// }, new { vaultKeepData }).FirstOrDefault();
-
-		// VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, new { vaultKeepData }).FirstOrDefault();
-
 		return vaultKeep;
 	}
 
 
 
-	// STUB: GET KEEPS IN PUBLIC✅ VAULT
-	internal List<VaultKeep> GetKeepsByPublicVaultId(int vaultId)
+	// STUB: GET KEEPS BY VAULT ID
+	internal List<Keep> GetKeepsByVaultId(int vaultId, string userId)
 	{
-		string sql = @"
-			SELECT 
-			vaultKeeps.*,
-			vaults.* 
-			FROM vaultKeeps 
-			JOIN vaults ON vaultKeeps.vaultId = vaults.id
-			WHERE vaultKeeps.vaultId = @vaultId;";
+		string vaultSQL = @"
+			SELECT * FROM vaults WHERE id = @vaultId;";
 
+		Vault vault = _db.Query<Vault>(vaultSQL, new { vaultId }).First();
 
-		List<VaultKeep> vaultKeeps = _db.Query<VaultKeep, Vault, VaultKeep>(sql, (vaultKeep, vault) =>
+		if (vault == null)
 		{
-			vaultKeep.CreatorId = vault.CreatorId;
-			vaultKeep.VaultId = vault.Id;
-			return vaultKeep;
-		}, new { vaultId }).ToList();
-		return vaultKeeps;
+			throw new Exception($"Invalid Vault Id: {vaultId}");
+		}
+
+		if (vault.IsPrivate && vault.CreatorId != userId)
+		{
+			throw new Exception("This vault is private and you are not the creator");
+		}
+
+		string sql = @"
+			SELECT
+			keeps.*, vaultKeeps.id as vaultKeepId, accounts.*
+			FROM keeps
+			JOIN vaultKeeps ON keeps.id = vaultKeeps.keepId 
+			JOIN vaults ON vaultKeeps.vaultId = vaults.id
+			JOIN accounts ON vaults.creatorId = accounts.id
+			WHERE vaultKeeps.vaultId = @vaultId AND (vaults.IsPrivate = false OR vaults.CreatorId = @userId);";
+
+		List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
+		{
+			keep.Creator = account;
+			return keep;
+		}, new { vaultId, userId }).ToList();
+
+		return keeps;
 	}
 
 
-	// STUB: GET KEEPS IN PRIVATE❌ VAULT
 
-
-
-	// STUB: CREATE VAULTKEEP
+	// STUB: DELETE VAULTKEEP
 }
