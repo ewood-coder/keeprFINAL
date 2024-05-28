@@ -127,7 +127,6 @@ public class VaultsController : ControllerBase
 
 
 	// STUB: GET KEEPS BY VAULT ID
-	[Authorize]
 	[HttpGet("{vaultId}/keeps")]
 	public async Task<ActionResult<List<VaultKeep>>> GetKeepsByVaultId(int vaultId)
 	{
@@ -135,25 +134,8 @@ public class VaultsController : ControllerBase
 		{
 			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
 
-			List<Keep> keeps = _vaultKeepsService.GetKeepsByVaultId(vaultId, userInfo.Id);
+			List<Keep> keeps = _vaultKeepsService.GetKeepsByVaultId(vaultId, userInfo?.Id);
 			return Ok(keeps);
-		}
-		catch (Exception exception)
-		{
-			return BadRequest(exception.Message);
-		}
-	}
-
-
-
-	// STUB: GET USERS VAULTS BY ID
-	[HttpGet("{profileId}/vaults")]
-	public ActionResult<List<Vault>> GetVaultsByUserId(string profileId)
-	{
-		try
-		{
-			List<Vault> userVaults = _profilesService.GetVaultsByUserId(profileId);
-			return Ok(userVaults);
 		}
 		catch (Exception exception)
 		{

@@ -46,7 +46,7 @@ public class ProfilesRepository
 
 
 	// STUB: GET USERS VAULTS BY ID
-	internal List<Vault> GetVaultsByUserId(string profileId)
+	internal List<Vault> GetVaultsByUserId(string profileId, string accountId)
 	{
 		string sql = @"
 			SELECT 
@@ -54,14 +54,14 @@ public class ProfilesRepository
 			accounts.* 
 			FROM vaults 
 			JOIN accounts ON accounts.id = vaults.creatorId
-			WHERE vaults.creatorId = @profileId;";
-
+			WHERE vaults.creatorId = @profileId AND (vaults.creatorId = @accountId OR vaults.isPrivate = false);";
 
 		List<Vault> userVaults = _profileRepository.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
 		{
 			vault.CreatorId = profile.Id;
 			return vault;
-		}, new { profileId }).ToList();
+		}, new { profileId, accountId }).ToList();
+
 		return userVaults;
 	}
 }

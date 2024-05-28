@@ -30,4 +30,40 @@ public class ProfilesController : ControllerBase
 			return BadRequest(exception.Message);
 		}
 	}
+
+
+
+	// STUB: GET USERS KEEPS BY ID
+	[HttpGet("{profileId}/keeps")]
+	public ActionResult<List<Keep>> GetKeepsByUserId(string profileId)
+	{
+		try
+		{
+			List<Keep> userKeeps = _profilesService.GetKeepsByUserId(profileId);
+			return Ok(userKeeps);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
+
+
+
+	// STUB: GET USERS VAULTS BY ID
+	[HttpGet("{profileId}/vaults")]
+	public async Task<ActionResult<List<Vault>>> GetVaultsByUserId(string profileId)
+	{
+		try
+		{
+			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+
+			List<Vault> userVaults = _profilesService.GetVaultsByUserId(profileId, userInfo?.Id);
+			return Ok(userVaults);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
 }

@@ -51,7 +51,7 @@ public class VaultsService
 	{
 		Vault vault = GetVaultById(vaultId); // private method only accessible by members of this class
 
-		if (vault.CreatorId != userId)
+		if (vault.CreatorId != userId && vault.IsPrivate == true)
 		{
 			throw new Exception($"Invalid id: {vaultId} 😉");
 		}

@@ -21,29 +21,31 @@ public class VaultKeepsRepository
 	// STUB: CREATE VAULTKEEP
 	internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
 	{
+		string vaultSQL = @"
+			SELECT * FROM vaults WHERE id = @VaultId;";
+
+		Vault vault = _db.Query<Vault>(vaultSQL, new { vaultId = vaultKeepData.VaultId }).FirstOrDefault();
+		if (vault == null)
+		{
+			throw new Exception("Invalid Id");
+		}
+
+		if (vault.CreatorId != vaultKeepData.CreatorId)
+		{
+			throw new Exception("You don't have access");
+		}
+
+
 		string sql = @"
 			INSERT INTO
 			vaultKeeps(creatorId, keepId, vaultId)
 			VALUES(@CreatorId, @KeepId, @VaultId);
+			
+			SELECT * FROM vaultKeeps
+			WHERE id = LAST_INSERT_ID();";
 
-			SELECT 
-			vaultKeeps.*,
-			vaults.*,
-			accounts.* 
-			FROM vaultKeeps
-			JOIN vaults ON vaultKeeps.vaultId = vaults.id
-    		JOIN accounts ON vaults.creatorId = accounts.id
-			WHERE vaultKeeps.id = LAST_INSERT_ID();";
+		VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, vaultKeepData).FirstOrDefault();
 
-
-		VaultKeep vaultKeep = _db.Query<VaultKeep, Vault, Profile, VaultKeep>
-		(sql, (vaultKeep, vault, account) =>
-		{
-			vaultKeep.CreatorId = vault.CreatorId;
-			vaultKeep.VaultId = vault.Id;
-			vaultKeep.CreatorId = account.Id;
-			return vaultKeep;
-		}, vaultKeepData).FirstOrDefault();
 
 		return vaultKeep;
 	}
@@ -51,12 +53,17 @@ public class VaultKeepsRepository
 
 
 	// STUB: GET KEEPS BY VAULT ID
-	internal List<Keep> GetKeepsByVaultId(int vaultId, string userId)
+	internal List<Keep> GetKeepsByVaultId(int vaultId, string? userId)
 	{
+		if (userId == null)
+		{
+			// it messes up sql if its null and not a string
+			userId = "0";
+		}
 		string vaultSQL = @"
 			SELECT * FROM vaults WHERE id = @vaultId;";
 
-		Vault vault = _db.Query<Vault>(vaultSQL, new { vaultId }).First();
+		Vault vault = _db.Query<Vault>(vaultSQL, new { vaultId }).FirstOrDefault();
 
 		if (vault == null)
 		{

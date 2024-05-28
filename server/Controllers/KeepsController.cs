@@ -70,8 +70,15 @@ public class KeepsController : ControllerBase
 			// We can still see who is logged in even if the route is not authorized
 			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
 
-			// NOTE userInfo?.Id does not drill into userInfo if null (user is not logged in)
-			Keep keep = _keepsService.IncrementViews(keepId, userInfo?.Id);
+
+			Keep keep = _keepsService.GetKeepById(keepId);
+
+
+			_keepsService.IncrementViews(keepId);
+			keep.Views++;
+
+
+
 			return Ok(keep);
 		}
 		catch (Exception exception)
@@ -111,23 +118,6 @@ public class KeepsController : ControllerBase
 			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
 			string message = _keepsService.DestroyKeep(keepId, userInfo.Id);
 			return Ok(message);
-		}
-		catch (Exception exception)
-		{
-			return BadRequest(exception.Message);
-		}
-	}
-
-
-
-	// STUB: GET USERS KEEPS BY ID
-	[HttpGet("{profileId}/keeps")]
-	public ActionResult<List<Keep>> GetKeepsByUserId(string profileId)
-	{
-		try
-		{
-			List<Keep> userKeeps = _profilesService.GetKeepsByUserId(profileId);
-			return Ok(userKeeps);
 		}
 		catch (Exception exception)
 		{

@@ -34,27 +34,21 @@ public class KeepsService
 
 	// NOTE overload: if you call GetKeepById and only supply an integer, this method runs
 	// this is a private method, we are dealing with sensitive information, so this only callable by members of the service
-	private Keep GetKeepById(int keepId)
-	{
-		Keep keep = _keepsRepository.GetKeepById(keepId);
+	// internal Keep GetKeepById(int keepId)
+	// {
 
-		if (keep == null)
-		{
-			throw new Exception($"Invalid id: {keepId}");
-		}
+	// 	if (keep == null)
+	// 	{
+	// 		throw new Exception($"Invalid id: {keepId}");
+	// 	}
 
-		return keep;
-	}
+	// 	return keep;
+	// }
 
 	// NOTE overload: if you call GetKeepById and supply an integer and a string, this method runs
-	internal Keep GetKeepById(int keepId, string userId)
+	internal Keep GetKeepById(int keepId)
 	{
-		Keep keep = GetKeepById(keepId); // private method only accessible by members of this class
-
-		if (keep.CreatorId != userId)
-		{
-			throw new Exception($"Invalid id: {keepId} 😉");
-		}
+		Keep keep = _keepsRepository.GetKeepById(keepId);
 
 		return keep;
 	}
@@ -62,13 +56,10 @@ public class KeepsService
 
 
 	// STUB: INCREMENT VIEWS ON KEEP FOR EACH VISIT
-	internal Keep IncrementViews(int keepId, string userId)
+	internal void IncrementViews(int keepId)
 	{
 		_keepsRepository.IncrementViews(keepId);
 
-		Keep keep = GetKeepById(keepId, userId);
-
-		return keep;
 	}
 
 

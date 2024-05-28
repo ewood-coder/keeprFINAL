@@ -25,7 +25,7 @@ public class VaultKeepsService
 
 
 	// // STUB: GET KEEPS BY VAULT ID
-	internal List<Keep> GetKeepsByVaultId(int vaultId, string userId)
+	internal List<Keep> GetKeepsByVaultId(int vaultId, string? userId)
 	{
 		List<Keep> keeps = _vaultKeepsRepository.GetKeepsByVaultId(vaultId, userId);
 		return keeps;

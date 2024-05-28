@@ -37,9 +37,9 @@ public class ProfilesService
 
 
 	// STUB: GET USERS VAULTS BY ID
-	internal List<Vault> GetVaultsByUserId(string profileId)
+	internal List<Vault> GetVaultsByUserId(string profileId, string accountId)
 	{
-		List<Vault> userVaults = _profilesRepository.GetVaultsByUserId(profileId);
+		List<Vault> userVaults = _profilesRepository.GetVaultsByUserId(profileId, accountId);
 		return userVaults;
 	}
 }

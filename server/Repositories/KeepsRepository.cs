@@ -34,17 +34,13 @@ public class KeepsRepository
 			INSERT INTO
 			keeps(creatorId, name, description, img, views)
 			VALUES(@CreatorId, @Name, @Description, @Img, @Views);
+			
+			SELECT * FROM keeps WHERE id = LAST_INSERT_ID();";
 
-			SELECT
-			keeps.*,
-			accounts.*
-			FROM keeps
-			JOIN accounts ON accounts.id = keeps.creatorId
-			WHERE keeps.id = LAST_INSERT_ID();";
+		Keep keep = _db.Query<Keep>(sql, keepData).FirstOrDefault();
 
-		Keep keep = _db.Query<Keep, Profile, Keep>(sql, PopulateCreator, keepData).FirstOrDefault();
 
-		return keep;
+		return GetKeepById(keep.Id);
 	}
 
 
