@@ -6,11 +6,14 @@ public class KeepsController : ControllerBase
 {
 	private readonly KeepsService _keepsService;
 	private readonly Auth0Provider _auth0Provider;
+	private readonly ProfilesService _profilesService;
 
-	public KeepsController(KeepsService keepsService, Auth0Provider auth0Provider)
+
+	public KeepsController(KeepsService keepsService, Auth0Provider auth0Provider, ProfilesService profilesService)
 	{
 		_keepsService = keepsService;
 		_auth0Provider = auth0Provider;
+		_profilesService = profilesService;
 	}
 
 
@@ -108,6 +111,23 @@ public class KeepsController : ControllerBase
 			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
 			string message = _keepsService.DestroyKeep(keepId, userInfo.Id);
 			return Ok(message);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
+
+
+
+	// STUB: GET USERS KEEPS BY ID
+	[HttpGet("{profileId}/keeps")]
+	public ActionResult<List<Keep>> GetKeepsByUserId(string profileId)
+	{
+		try
+		{
+			List<Keep> userKeeps = _profilesService.GetKeepsByUserId(profileId);
+			return Ok(userKeeps);
 		}
 		catch (Exception exception)
 		{

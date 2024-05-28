@@ -39,9 +39,37 @@ public class VaultKeepsController : ControllerBase
 
 
 
-	// STUB: GET KEEPS BY VAULT ID
+	// STUB: GET VAULTKEEP BY ID
+	[HttpGet("{vaultKeepId}")]
+	public ActionResult<VaultKeep> GetVaultKeepById(int vaultKeepId)
+	{
+		try
+		{
+			VaultKeep vaultKeep = _vaultKeepsService.GetVaultKeepById(vaultKeepId);
+			return Ok(vaultKeep);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
 
 
 
 	// STUB: DELETE VAULTKEEP
+	[Authorize]
+	[HttpDelete("{vaultKeepId}")]
+	public async Task<ActionResult<string>> DestroyVaultKeep(int vaultKeepId)
+	{
+		try
+		{
+			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+			string message = _vaultKeepsService.DestroyVaultKeep(vaultKeepId, userInfo.Id);
+			return Ok(message);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
 }

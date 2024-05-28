@@ -88,5 +88,33 @@ public class VaultKeepsRepository
 
 
 
+	// STUB: GET VAULTKEEP BY ID
+	internal VaultKeep GetVaultKeepById(int vaultKeepId)
+	{
+		string sql = "SELECT * FROM vaultKeeps WHERE id = @vaultKeepId;";
+
+		VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, new { vaultKeepId }).FirstOrDefault();
+
+		return vaultKeep;
+	}
+
+
+
 	// STUB: DELETE VAULTKEEP
+	internal void DestroyVaultKeep(int vaultKeepId)
+	{
+		string sql = "DELETE FROM vaultKeeps WHERE id = @vaultKeepId LIMIT 1;";
+
+		int rowsAffected = _db.Execute(sql, new { vaultKeepId });
+
+		if (rowsAffected == 0)
+		{
+			throw new Exception("DELETE failed!");
+		}
+
+		if (rowsAffected > 1)
+		{
+			throw new Exception("UH OH, MORE THAN ONE ROW WAS AFFECTED. GET HELP!");
+		}
+	}
 }

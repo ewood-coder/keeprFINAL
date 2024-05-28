@@ -7,14 +7,17 @@ public class VaultsController : ControllerBase
 	private readonly VaultsService _vaultsService;
 	private readonly Auth0Provider _auth0Provider;
 	private readonly VaultKeepsService _vaultKeepsService;
+	private readonly ProfilesService _profilesService;
 
 
 
-	public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider, VaultKeepsService vaultKeepsService)
+
+	public VaultsController(VaultsService vaultsService, Auth0Provider auth0Provider, VaultKeepsService vaultKeepsService, ProfilesService profilesService)
 	{
 		_vaultsService = vaultsService;
 		_auth0Provider = auth0Provider;
 		_vaultKeepsService = vaultKeepsService;
+		_profilesService = profilesService;
 	}
 
 
@@ -132,8 +135,25 @@ public class VaultsController : ControllerBase
 		{
 			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
 
-			List<K> keeps = _vaultKeepsService.GetKeepsByVaultId(vaultId, userInfo.Id);
+			List<Keep> keeps = _vaultKeepsService.GetKeepsByVaultId(vaultId, userInfo.Id);
 			return Ok(keeps);
+		}
+		catch (Exception exception)
+		{
+			return BadRequest(exception.Message);
+		}
+	}
+
+
+
+	// STUB: GET USERS VAULTS BY ID
+	[HttpGet("{profileId}/vaults")]
+	public ActionResult<List<Vault>> GetVaultsByUserId(string profileId)
+	{
+		try
+		{
+			List<Vault> userVaults = _profilesService.GetVaultsByUserId(profileId);
+			return Ok(userVaults);
 		}
 		catch (Exception exception)
 		{
