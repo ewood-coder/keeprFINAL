@@ -8,5 +8,3 @@ export class Profile extends DatabaseItem {
 		this.coverImg = data.coverImg;
 	}
 }
-
-

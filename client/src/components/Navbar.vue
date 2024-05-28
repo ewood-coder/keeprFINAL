@@ -21,7 +21,7 @@ function toggleTheme() {
 	<nav class="navbar navbar-expand-sm navbar-light bg-light px-3 py-md-4 navbarBoxShadow">
 		<router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
 			<div class="d-flex flex-column align-items-center">
-				<img alt="logo" src="../assets/img/logo2noBG.png" height="65" />
+				<img alt="logo" src="../assets/img/logo.png" height="64" />
 			</div>
 		</router-link>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -29,9 +29,24 @@ function toggleTheme() {
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav me-auto gap-3 p-md-1">
+
+				<li class="mx-auto">
+					<router-link :to="{ name: 'Home' }" class="btn text-dark lighten-30 selectable text-uppercase">
+						Home
+					</router-link>
+				</li>
+
+				<li class="mx-auto">
+					<button class="btn text-dark lighten-30 selectable text-uppercase">
+						Create <i class="mdi mdi-menu-down-outline"></i>
+					</button>
+				</li>
+
+			</ul>
 			<div class="ms-0 ms-md-auto d-flex me-auto me-md-0 text-end">
 				<!-- LOGIN COMPONENT HERE -->
-				<Login class="pe-3 d-flex" />
+				<Login class="pe-3 d-flex loginImg" />
 
 				<button class="btn text-dark fs-3 align-content-center hidden" @click="toggleTheme"
 					:title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
@@ -56,7 +71,7 @@ a:hover {
 }
 
 .navbar-nav .router-link-exact-active {
-	border-bottom: 2px solid var(--bs-success);
+	border-bottom: 2px solid rgb(88, 88, 88);
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
@@ -70,5 +85,9 @@ a:hover {
 
 .navbarBoxShadow {
 	box-shadow: 0px 0px 5px -3px rgba(0, 0, 0, 0.5);
+}
+
+.loginImg {
+	border-radius: 0px;
 }
 </style>
