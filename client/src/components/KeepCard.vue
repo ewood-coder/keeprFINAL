@@ -23,21 +23,6 @@ const props = defineProps({
 
 
 // STUB: FUNCTIONS: -----------------------------------
-// async function FavoriteRecipe(recipeId) {
-// 	try {
-// 		await favoritesService.FavoriteRecipe(recipeId)
-// 	} catch (error) {
-// 		Pop.error(error)
-// 	}
-// }
-
-// async function RemoveFavoriteRecipe(favoriteId) {
-// 	try {
-// 		await favoritesService.RemoveFavoriteRecipe(favoriteId)
-// 	} catch (error) {
-// 		Pop.error(error)
-// 	}
-// }
 
 async function setActiveKeep() {
 	console.log('setting active keep', props.keep)
@@ -47,6 +32,20 @@ async function setActiveKeep() {
 async function setActiveProfile() {
 	console.log('setting active profile', props.keep.creator)
 	await keepsService.setActiveKeep(props.keep.creator)
+}
+
+async function destroyKeep(keep) {
+	try {
+		const res = await Pop.confirm('Are you sure you want to delete this keep?')
+		if (!res) {
+			return
+		}
+		await keepsService.destroyKeep(keep.id)
+		Pop.success('Keep Deleted')
+	}
+	catch (error) {
+		Pop.error(error)
+	}
 }
 
 // ---------------------------------------------------
@@ -66,11 +65,32 @@ async function setActiveProfile() {
 
 		<img :src="keep.creator.picture" :alt="keep.creator.name" role="button" @click="setActiveProfile()"
 			:title="`Profile: ${keep.creator.name}`" class="profile-img">
+
+		<button v-if="keep.creatorId == account?.id" @click="destroyKeep(keep.id)" class="btnDelete p-1"
+			:title="`Delete Keep`">
+			<i class="mdi mdi-trash-can-outline fs-4 px-1 px-md-2"></i>
+		</button>
 	</div>
 </template>
 
 
 <style scoped>
+.btnDelete {
+	color: white;
+	background-color: #bf0101;
+	border: solid 1px #bf0101;
+	border-radius: 9999px;
+	transition: 0.4s ease-in-out;
+}
+
+.btnDelete:hover {
+	color: #ffffff;
+	background-color: #e20000;
+	border: solid 1px #bf0101;
+	border-radius: 9999px;
+	transition: 0.4s ease-in-out;
+}
+
 .keep-card {
 	/* background-color: #ff9074; */
 	background-color: #fdac98;
