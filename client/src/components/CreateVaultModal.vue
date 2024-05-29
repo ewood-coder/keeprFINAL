@@ -12,71 +12,82 @@ const account = computed(() => AppState.account)
 const isPrivate = computed(() => AppState.account?.id === vault.value?.isPrivate)
 
 
-const editableKeepData = ref({
+const editableVaultData = ref({
 	name: '',
+	description: '',
 	img: '',
+	isPrivate: false,
 })
 
 // STUB: FUNCTIONS: -----------------------------------
 
-async function createKeep() {
+async function createVault() {
 	try {
-		logger.log('Creating keep! 🖼️', editableKeepData)
+		logger.log('Creating vault! 📦', editableVaultData)
 		// NOTE .value pulls out the data stored inside of the ref object (whatever is inside the parentheses)
 
-		await keepsService.createKeep(editableKeepData.value)
+		await vaultsService.createVault(editableVaultData.value)
 
 		// NOTE form.reset()
-		editableKeepData.value = {
+		editableVaultData.value = {
 			name: '',
 			description: '',
 			img: '',
+			isPrivate: false,
 		}
 
 		// NOTE closes Modal after submit
-		Modal.getOrCreateInstance('#createKeepModal').hide()
+		Modal.getOrCreateInstance('#createVaultModal').hide()
 	}
 	catch (error) {
 		Pop.error(error);
 	}
 }
 // -----------------------------------------------------
-
-
-
 </script>
 
 
 <template>
-	<div class="modal fade" id="createKeepModal" tabindex="-1" aria-labelledby="createKeepModalLabel" aria-hidden="true">
+	<div class="modal fade" id="createVaultModal" tabindex="-1" aria-labelledby="createVaultModalLabel"
+		aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-xl">
 			<div class="modal-content">
 
 				<div class="modal-header">
-					<div class="fs-1 markoOne" id="postFormModalLabel">Add Your Keep</div>
+					<div class="fs-1 markoOne" id="createVaultModalLabel">Add Your Vault</div>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 
 				<div class="modal-body">
-					<form @submit.prevent="createKeep()">
+					<form @submit.prevent="createVault()">
 
 						<div class="form-floating mb-4">
-							<input v-model="editableKeepData.name" type="String" class="form-control" id="keepName"
-								placeholder="Keep Name" required maxlength="15">
-							<label for="keepName">Keep Title...</label>
+							<input v-model="editableVaultData.name" type="String" class="form-control" id="vaultName"
+								placeholder="Vault Name" required maxlength="15">
+							<label for="vaultName">Vault Title...</label>
 						</div>
 
 						<div class="form-floating mb-4">
-							<input v-model="editableKeepData.img" type="url" class="form-control" id="keepUrl"
-								placeholder="Keep Thumbnail" maxlength="500">
-							<label for="keepUrl">Insert Image Address...</label>
+							<input v-model="editableVaultData.img" type="url" class="form-control" id="vaultUrl"
+								placeholder="Vault Thumbnail" maxlength="500">
+							<label for="vaultUrl">Insert Image Address...</label>
 						</div>
 
-						<div class="form-floating mb-4">
-							<textarea v-model="editableKeepData.description" type="String" class="form-control rows"
-								id="keepDescription" placeholder="Keep Description" required maxlength="1000">
+						<!-- <div class="form-floating mb-4">
+							<textarea v-model="editableVaultData.description" type="String" class="form-control rows"
+								id="vaultDescription" placeholder="Vault Description" required maxlength="1000">
 							</textarea>
-							<label for="keepDescription">Description...</label>
+							<label for="vaultDescription">Description...</label>
+						</div> -->
+
+						<div class="form-floating mb-4">
+							<div class="form-check d-flex justify-content-center align-items-center gap-3 fs-5">
+								<input class="form-check-input" v-model="editableVaultData.isPrivate" type="checkbox"
+									id="vaultPrivateCheck">
+								<label class="form-check-label fw-bold" for="vaultPrivateCheck">
+									Make Vault Private?
+								</label>
+							</div>
 						</div>
 
 						<div class="text-end">
@@ -97,48 +108,10 @@ async function createKeep() {
 /* @import "/src/assets/scss/modalAnimation.scss"; */
 
 .modal-content {
-	background-color: rgb(216, 215, 215);
+	background-color: rgb(235, 235, 235);
 }
 
 .rows {
 	min-height: 50vh;
-}
-
-img {
-	width: 100%;
-	margin-bottom: 1em;
-}
-
-.profileImg {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-}
-
-.btnLike {
-	color: rgb(0, 0, 0);
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
-}
-
-.btnLike:hover {
-	transition: all 0.3s ease-in-out;
-	color: #ff3f92;
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
-}
-
-.btnAlreadyLiked {
-	/* color: #e44b7e; */
-	/* color: #0084ff; */
-	color: #ff3f92;
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
-}
-
-.btnLikeOff {
-	color: white;
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
 }
 </style>

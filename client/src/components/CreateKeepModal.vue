@@ -54,7 +54,7 @@ async function createKeep() {
 			<div class="modal-content">
 
 				<div class="modal-header">
-					<div class="fs-1 markoOne" id="postFormModalLabel">Add Your Keep</div>
+					<div class="fs-1 markoOne" id="createKeepModalLabel">Add Your Keep</div>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 
@@ -98,48 +98,10 @@ async function createKeep() {
 /* @import "/src/assets/scss/modalAnimation.scss"; */
 
 .modal-content {
-	background-color: rgb(216, 215, 215);
+	background-color: rgb(235, 235, 235);
 }
 
 .rows {
 	min-height: 50vh;
-}
-
-img {
-	width: 100%;
-	margin-bottom: 1em;
-}
-
-.profileImg {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-}
-
-.btnLike {
-	color: rgb(0, 0, 0);
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
-}
-
-.btnLike:hover {
-	transition: all 0.3s ease-in-out;
-	color: #ff3f92;
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
-}
-
-.btnAlreadyLiked {
-	/* color: #e44b7e; */
-	/* color: #0084ff; */
-	color: #ff3f92;
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
-}
-
-.btnLikeOff {
-	color: white;
-	background-color: rgba(255, 255, 255, 0);
-	border: none;
 }
 </style>

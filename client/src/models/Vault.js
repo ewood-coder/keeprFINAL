@@ -2,8 +2,8 @@ import { DatabaseItem } from "./DatabaseItem.js";
 import { Profile } from "./Profile.js";
 
 export class Vault extends DatabaseItem {
-  constructor(data) {
-    super(data) //calls constructor on DataBaseItem
+   constructor(data) {
+      super(data) //calls constructor on DataBaseItem
 
     // id, createdAt, updatedAt inherited from DatabaseItem
 

@@ -6,7 +6,7 @@ import { api } from "./AxiosService.js"
 class KeepsService {
 	async setActiveKeep(keep) {
 		AppState.activeKeep = keep
-		// await this.getRecipeIngredients(keep.id)
+		this.getKeepById(keep.id)
 	}
   
   async getKeepById(keepId) {

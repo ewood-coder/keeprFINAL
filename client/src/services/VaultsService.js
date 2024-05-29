@@ -32,15 +32,16 @@ class VaultsService {
   }
 
   async createVault(vaultData){
-    const response = await api.post('api/vaults', vaultData)
-    logger.log("CREATED VAULT 📦📦📦", response.data)
-    AppState.vaults = [new Vault(response.data) , ...AppState.vaults ]
+   const response = await api.post('api/vaults', vaultData)
+   logger.log("CREATED VAULT 📦📦📦", response.data)
+   const newVault = new Vault(response.data)
+   AppState.vaults.push(newVault)
   }
 
   async  updateVault(vaultId, vaultData){
-    const response = await api.put(`api/vaults/${vaultId}`, vaultData)
-    logger.log("UPDATED VAULT 📦✅", response.data)
-    AppState.activeVault = new Vault(response.data)
+   const response = await api.put(`api/vaults/${vaultId}`, vaultData)
+   logger.log("UPDATED VAULT 📦✅", response.data)
+   AppState.activeVault = new Vault(response.data)
   } 
 
   async deleteVault(vaultId){

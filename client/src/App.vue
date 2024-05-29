@@ -3,6 +3,8 @@ import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import CreateKeepModal from './components/CreateKeepModal.vue';
 import KeepModal from './components/KeepModal.vue';
+import CreateVaultModal from './components/CreateVaultModal.vue';
+
 
 
 </script>
@@ -20,6 +22,7 @@ import KeepModal from './components/KeepModal.vue';
 	<!-- SECTION: MODALS -->
 	<KeepModal />
 	<CreateKeepModal />
+	<CreateVaultModal />
 </template>
 
 <style lang="scss">
