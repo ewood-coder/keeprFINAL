@@ -38,9 +38,16 @@ function toggleTheme() {
 				</li>
 
 				<li class="mx-auto">
-					<button class="btn text-dark lighten-30 selectable text-uppercase">
-						Create <i class="mdi mdi-menu-down-outline"></i>
-					</button>
+					<div class="dropdown-center">
+						<button class="btn hoverBG text-dark lighten-30 text-uppercase dropdown-toggle" type="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							Create
+						</button>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="createKeepModal">New Keep</a></li>
+							<li><a class="dropdown-item" href="#">New Vault</a></li>
+						</ul>
+					</div>
 				</li>
 
 			</ul>
@@ -58,6 +65,10 @@ function toggleTheme() {
 </template>
 
 <style scoped>
+.hoverBG:hover {
+	background-color: rgb(225, 225, 225);
+}
+
 .hidden {
 	display: none;
 }

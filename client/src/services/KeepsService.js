@@ -43,7 +43,7 @@ class KeepsService {
     AppState.activeKeep = new Keep(response.data)
   } 
 
-  async deleteKeep(keepId){
+  async destroyKeep(keepId){
     await api.delete(`api/keeps/${keepId}`)
     AppState.activeKeep = null
     AppState.keeps = AppState.keeps.filter(r => r.id != keepId)

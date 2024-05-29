@@ -60,7 +60,7 @@ onMounted(() => {
 <template>
 	<main>
 
-		<div class="container mt-2">
+		<div class="container-fluid mt-2">
 			<!-- NOTE v-if keeps the profile from trying to draw, before the network response is back -->
 			<section class="row" v-if="profile">
 
@@ -86,7 +86,7 @@ onMounted(() => {
 			</section>
 		</div>
 
-		<div class="container mt-3">
+		<div class="container-fluid mt-3 px-md-4 px-lg-5">
 			<section class="row justify-content-center">
 				<div class="mt-5 mb-4 fs-1 fw-semibold">Vaults</div>
 
