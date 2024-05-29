@@ -7,7 +7,6 @@ import { AppState } from '../AppState.js';
 
 const accountData = ref({
 	name: '',
-	email: '',
 	picture: '',
 	coverImg: '',
 })
@@ -34,24 +33,23 @@ async function saveAccount() {
 	<hr class="mb-3" />
 	<form @submit.prevent="saveAccount()" class="row">
 		<div class="mb-3 col-12 col-md-4 mb-5">
-			<label for="account-name">Name</label>
+			<label for="account-name" class="mask px-3 mb-2">Name</label>
 			<input v-model="accountData.name" class="form-control" type="text" id="account-name" minlength="2" required
 				maxlength="25" />
 		</div>
 		<div class="mb-3 col-12 col-md-4 mb-5">
-			<label for="account-picture">Picture</label>
+			<label for="account-picture" class="mask px-3 mb-2">Picture</label>
 			<input v-model="accountData.picture" class="form-control" type="url" id="account-picture" maxlength="500">
 		</div>
 		<div class="mb-3 col-12 col-md-4 mb-5">
-			<label for="account-cover-image">Cover Image</label>
+			<label for="account-cover-image" class="mask px-3 mb-2">Cover Image</label>
 			<input v-model="accountData.coverImg" class="form-control" type="url" id="account-cover-image" maxlength="500">
 		</div>
 
 
 		<div class="mb-3 col-12 d-flex justify-content-center">
-			<button class="btn btn-success text-light">Save <i class="mdi mdi-floppy"></i></button>
+			<button class="btn btn-primary text-light">Save <i class="mdi mdi-floppy"></i></button>
 		</div>
-
 	</form>
 </template>
 
@@ -70,5 +68,13 @@ async function saveAccount() {
 	width: 100px;
 	object-fit: cover;
 	object-position: center;
+}
+
+.mask {
+	background-color: rgba(165, 165, 165, 0.1);
+	backdrop-filter: blur(15px);
+	border-radius: 10px;
+
+	text-shadow: 2px 2px 2px black;
 }
 </style>

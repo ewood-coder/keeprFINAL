@@ -22,6 +22,15 @@ class KeepsService {
     AppState.keeps.reverse()
   }
 
+  async getProfileKeeps(profileId) {
+	AppState.profileKeeps = []
+	const response = await api.get(`api/profiles/${profileId}/keeps?`)
+	console.log('GOT PROFILE KEEPS 🖼️✅', response.data)
+	const keeps = response.data.map(keep => new Keep(keep))
+
+	AppState.profileKeeps = keeps
+}
+
   async createKeep(keepData){
     const response = await api.post('api/keeps', keepData)
     logger.log("CREATED KEEP 🖼️🖼️🖼️", response.data)

@@ -37,7 +37,7 @@ public class ProfilesRepository
 
 		List<Keep> userKeeps = _profileRepository.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
 		{
-			keep.CreatorId = profile.Id;
+			keep.Creator = profile;
 			return keep;
 		}, new { profileId }).ToList();
 		return userKeeps;

@@ -49,7 +49,7 @@ async function createKeep(event) {
 </script>
 
 <template>
-	<div class="container-fluid">
+	<div class="container py-5">
 
 		<!-- SECTION: KEEPS -->
 		<section class="d-flex flex-wrap justify-content-center row">

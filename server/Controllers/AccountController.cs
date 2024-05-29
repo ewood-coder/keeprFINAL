@@ -36,6 +36,25 @@ public class AccountController : ControllerBase
 
 
 
+	// STUB: UPDATE ACCOUNT
+	[HttpPut]
+	[Authorize]
+	public async Task<ActionResult<Account>> Update([FromBody] Account updatedAccount)
+	{
+		try
+		{
+			Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+			updatedAccount.Id = userInfo.Id;
+			return Ok(_accountService.Edit(updatedAccount, userInfo.Email));
+		}
+		catch (Exception e)
+		{
+			return BadRequest(e.Message);
+		}
+	}
+
+
+
 	// STUB: GET LOGGED IN USERS VAULTS
 	[HttpGet("vaults")]
 	[Authorize]
