@@ -58,7 +58,7 @@ public class ProfilesRepository
 
 		List<Vault> userVaults = _profileRepository.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
 		{
-			vault.CreatorId = profile.Id;
+			vault.Creator = profile;
 			return vault;
 		}, new { profileId, accountId }).ToList();
 

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 ) default charset utf8mb4 COMMENT '';
 
 ALTER TABLE accounts
-ADD COLUMN IF NOT EXISTS coverImg VARCHAR(1000) COMMENT 'User Cover Image';
+ADD COLUMN IF NOT EXISTS coverImg VARCHAR(1000) NULL COMMENT 'User Cover Image';
 -- SECTION: KEEPS ------------------------------------------
 
 CREATE TABLE keeps (

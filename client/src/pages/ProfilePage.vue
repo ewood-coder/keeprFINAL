@@ -88,17 +88,17 @@ onMounted(() => {
 
 		<div class="container mt-3">
 			<section class="row justify-content-center">
-				<div class="mb-4 fs-2 fw-semibold">Vaults</div>
+				<div class="mt-5 mb-4 fs-1 fw-semibold">Vaults</div>
 
-				<div v-for="vault in profileVaults" :key="vault.id" class="col-10 mb-5">
+				<div v-for="vault in profileVaults" :key="vault.id" class="col-6 col-md-3 mb-5">
 					<VaultCard :vault="vault" />
 				</div>
 			</section>
 
 			<section class="row justify-content-center">
-				<div class="mb-4 fs-2 fw-semibold">Keeps</div>
+				<div class="mt-5 mb-4 fs-1 fw-semibold">Keeps</div>
 
-				<div v-for="keep in profileKeeps" :key="keep.id" class="col-10 mb-5">
+				<div v-for="keep in profileKeeps" :key="keep.id" class="col-6 col-md-3 mb-5">
 					<KeepCard :keep="keep" />
 				</div>
 			</section>

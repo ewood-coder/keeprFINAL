@@ -114,9 +114,9 @@ public class KeepsRepository
 			WHERE keeps.id = @Id;";
 
 
-		Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
+		Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
 		{
-			keep.Creator = account;
+			keep.Creator = profile;
 			return keep;
 		}, keepToUpdate).FirstOrDefault();
 

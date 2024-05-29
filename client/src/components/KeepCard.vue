@@ -3,15 +3,21 @@ import { computed, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
+import { Profile } from '../models/Profile.js';
+import { profilesService } from '../services/ProfilesService.js';
 import { AppState } from '../AppState.js';
 
 
 const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
+const profiles = computed(() => AppState.profiles)
+
+
 
 
 const props = defineProps({
 	keep: { type: Keep, required: true },
+	// profile: { type: Profile, required: true },
 })
 
 
@@ -37,6 +43,11 @@ async function setActiveKeep() {
 	await keepsService.setActiveKeep(props.keep)
 }
 
+async function setActiveProfile() {
+	console.log('setting active profile', props.keep.creator)
+	await keepsService.setActiveKeep(props.keep.creator)
+}
+
 // ---------------------------------------------------
 
 </script>
@@ -52,7 +63,8 @@ async function setActiveKeep() {
 			<div class="px-2 py-1 fontSize text-capitalize">{{ keep.name }}</div>
 		</div>
 
-		<div class="rounded">{{ keep.creatorId }}</div>
+		<img :src="keep.creator.picture" :alt="keep.creator.name" role="button" @click="setActiveProfile()"
+			:title="`${keep.creator.name}`" class="profile-img">
 	</div>
 </template>
 
@@ -75,6 +87,17 @@ async function setActiveKeep() {
 	width: 100%;
 	height: 40vh;
 	object-fit: cover;
+}
+
+.profile-img {
+	width: 50px;
+	height: 50px;
+
+	border-radius: 9999px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+	background-color: white;
+	padding: 2px;
 }
 
 .fontSize {

@@ -15,7 +15,6 @@ const vaults = computed(() => AppState.vaults)
 
 
 const props = defineProps({
-	keep: { type: Keep, required: true },
 	vault: { type: Vault, required: true },
 })
 
@@ -57,17 +56,23 @@ async function setActiveVault() {
 			<div class="px-2 py-1 fontSize text-capitalize">{{ vault.name }}</div>
 
 
-			<div v-if="vault.isPrivate == true && vault.creatorId == account.id">
-				<i class="mdi mdi-lock fs-5"></i>
+			<div v-if="vault.isPrivate == true && vault.creatorId == account?.id">
+				<span class="lockBG p-2"><i class="mdi mdi-lock fs-5 mx-auto"></i></span>
 			</div>
 		</div>
 
-		<div class="rounded">{{ vault.creator.picture }}</div>
 	</div>
 </template>
 
 
 <style scoped>
+.lockBG {
+	color: black;
+	background-color: white;
+
+	border-radius: 9999px;
+}
+
 .vault-card {
 	/* background-color: #ff9074; */
 	background-color: #fdac98;
