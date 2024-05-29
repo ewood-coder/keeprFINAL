@@ -44,8 +44,11 @@ function toggleTheme() {
 							Create
 						</button>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="createKeepModal">New Keep</a></li>
-							<li><a class="dropdown-item" href="#">New Vault</a></li>
+							<li class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#createKeepModal">
+								New Keep</li>
+							<hr class="my-1" />
+							<li class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#createVaultModal">
+								New Vault</li>
 						</ul>
 					</div>
 				</li>

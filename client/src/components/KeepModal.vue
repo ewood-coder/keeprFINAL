@@ -55,7 +55,7 @@ async function destroyKeep() {
 
 								<div class="px-4 px-lg-5 pt-3 pt-lg-4 mt-3">
 									<div class="pt-lg-4">
-										<div class="fw-bold fs-1 text-center py-3 my-auto">{{ keep?.name }}</div>
+										<div class="fw-bold fs-1 text-center py-3 my-auto markoOne">{{ keep?.name }}</div>
 
 										<div class="lh-lg grayText pb-5 my-auto">{{ keep?.description }}</div>
 									</div>

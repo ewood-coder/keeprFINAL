@@ -4,17 +4,16 @@ import { logger } from '../utils/Logger.js';
 import { Modal } from 'bootstrap';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
-import { Keep } from '../models/Keep.js';
-import { keepsService } from '../services/KeepsService.js';
+import { Vault } from '../models/Vault.js';
+import { vaultsService } from '../services/VaultsService.js';
 
-const keep = computed(() => AppState.activeKeep)
+const vault = computed(() => AppState.activeVault)
 const account = computed(() => AppState.account)
-const isKept = computed(() => AppState.account?.id === keep.value?.kept)
+const isPrivate = computed(() => AppState.account?.id === vault.value?.isPrivate)
 
 
 const editableKeepData = ref({
 	name: '',
-	description: '',
 	img: '',
 })
 

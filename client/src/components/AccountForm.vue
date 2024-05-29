@@ -33,16 +33,16 @@ async function saveAccount() {
 	<hr class="mb-3" />
 	<form @submit.prevent="saveAccount()" class="row">
 		<div class="mb-3 col-12 col-md-4 mb-5">
-			<label for="account-name" class="mask px-3 mb-2">Name</label>
+			<label for="account-name" class="mask px-3 mb-2 fs-5">Name</label>
 			<input v-model="accountData.name" class="form-control" type="text" id="account-name" minlength="2" required
 				maxlength="25" />
 		</div>
 		<div class="mb-3 col-12 col-md-4 mb-5">
-			<label for="account-picture" class="mask px-3 mb-2">Picture</label>
+			<label for="account-picture" class="mask px-3 mb-2 fs-5">Picture</label>
 			<input v-model="accountData.picture" class="form-control" type="url" id="account-picture" maxlength="500">
 		</div>
 		<div class="mb-3 col-12 col-md-4 mb-5">
-			<label for="account-cover-image" class="mask px-3 mb-2">Cover Image</label>
+			<label for="account-cover-image" class="mask px-3 mb-2 fs-5">Cover Image</label>
 			<input v-model="accountData.coverImg" class="form-control" type="url" id="account-cover-image" maxlength="500">
 		</div>
 

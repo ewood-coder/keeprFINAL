@@ -49,11 +49,11 @@ async function setActiveVault() {
 <template>
 	<div class="vault-card rounded-4 mask1">
 
-		<img :src="vault.img" :alt="vault.name" role="button" @click="setActiveVault()" :title="`vault for ${vault.name}`"
-			class="vault-img">
+		<img :src="vault.img" :alt="vault.name" role="button" @click="setActiveVault()"
+			:title="`image of vault with name: ${vault.name}`" class="vault-img">
 
 		<div class="px-4 py-2 bgColor">
-			<div class="px-2 py-1 fontSize text-capitalize">{{ vault.name }}</div>
+			<div class="px-2 py-1 fs-5 text-capitalize quando">{{ vault.name }}</div>
 
 
 			<div v-if="vault.isPrivate == true && vault.creatorId == account?.id">

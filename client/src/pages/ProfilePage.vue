@@ -79,7 +79,7 @@ onMounted(() => {
 						<img class="profile-img mt-3 roundedImg p-1" :src="profile.picture"
 							:alt="`picture of ${profile.name}`">
 					</span>
-					<div class="mt-2 fs-2 fw-bold">{{ profile.name }}</div>
+					<div class="mt-2 fs-2 fw-bold markoOne">{{ profile.name }}</div>
 
 					<div class="fs-5">{{ profileKeeps.length }} Keeps | {{ profileVaults.length }} Vaults</div>
 				</div>

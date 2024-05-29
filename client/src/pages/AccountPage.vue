@@ -16,7 +16,7 @@ const account = computed(() => AppState.account)
 					<div class="fs-1 fw-semibold">Welcome {{ account.name }}</div>
 					<div>
 						<img class="rounded my-2" :src="account.picture" alt="" />
-						<p class="">{{ account.email }}</p>
+						<p class="fs-5">{{ account.email }}</p>
 					</div>
 				</div>
 

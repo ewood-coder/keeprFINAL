@@ -53,7 +53,7 @@ async function createKeep(event) {
 
 		<!-- SECTION: KEEPS -->
 		<section class="d-flex flex-wrap justify-content-center row">
-			<div v-for="keep in keeps" :key="keep.id" class="col-5 col-md-6 col-lg-4 mb-4 px-3 px-md-4 py-2">
+			<div v-for="keep in keeps" :key="keep.id" class="col-5 col-md-6 col-lg-4 mb-4 gap-1 px-md-4 py-2">
 
 				<KeepCard :keep="keep" />
 

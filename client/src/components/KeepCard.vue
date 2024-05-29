@@ -58,14 +58,14 @@ async function setActiveProfile() {
 	<div class="keep-card rounded-4 mask1">
 
 		<img :src="keep.img" :alt="keep.name" data-bs-toggle="modal" data-bs-target="#keepModal" role="button"
-			@click="setActiveKeep()" :title="`Information about the ${keep.name} keep`" class="keep-img">
+			@click="setActiveKeep()" :title="`Information about the keep: ${keep.name}`" class="keep-img">
 
 		<div class="px-4 py-2 bgColor">
-			<div class="px-2 py-1 fontSize text-capitalize">{{ keep.name }}</div>
+			<div class="px-2 py-1 fontSize text-capitalize markoOne">{{ keep.name }}</div>
 		</div>
 
 		<img :src="keep.creator.picture" :alt="keep.creator.name" role="button" @click="setActiveProfile()"
-			:title="`${keep.creator.name}`" class="profile-img">
+			:title="`Profile: ${keep.creator.name}`" class="profile-img">
 	</div>
 </template>
 

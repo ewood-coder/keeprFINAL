@@ -27,6 +27,35 @@ import KeepModal from './components/KeepModal.vue';
 
 :root {
 	--main-height: calc(100vh - 32px - 64px);
+
+	--bgDarkBlue: #2b2d42;
+	--bgPink: #E86A92;
+	--bgGold: #FFD41C;
+	--bgLightBlue: #2bb6cf;
+	--bgTurquoise: #41e2ba;
+	--bgGreen: #22c122;
+	--bgGray: #868686;
+	--bgRed: #da0000;
+}
+
+.createBtn {
+	background-color: var(--bgLightBlue);
+	border: none;
+	transition: 0.4s;
+	color: white;
+}
+
+.createBtn:hover {
+	background-color: var(--bgGreen);
+	color: white;
+}
+
+.markoOne {
+	font-family: "Marko One", serif;
+}
+
+.quando {
+	font-family: "Quando", serif;
 }
 
 .mask {
