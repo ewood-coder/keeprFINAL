@@ -4,10 +4,10 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class VaultsService {
-	async setActiveVault(vault) {
-		AppState.activeVault = vault
-		// await this.getVaultKeeps(keep.id)
-	}
+	// async setActiveVault(vault) {
+	// 	AppState.activeVault = vault
+	// 	// await this.getVaultKeeps(keep.id)
+	// }
   
   async getVaultById(vaultId) {
     AppState.activeVault = null

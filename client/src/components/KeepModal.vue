@@ -42,25 +42,25 @@ async function destroyKeep() {
 						<section class="row">
 
 							<div class="col-12 col-lg-6">
-								<img :src="keep?.img" :alt="`image of ${keep?.name}`" class="modalImg h-100">
+								<img :src="keep?.img" :alt="`image of ${keep?.name}`" class="modalImg">
 							</div>
 
 							<div class="col-12 col-lg-6">
-								<div class="fs-5 gap-3 fs-4 d-flex justify-content-center grayText p-2 py-4"
+								<div class="fs-5 gap-3 fs-4 d-flex justify-content-center grayText px-2 pt-4 pb-2 py-md-4"
 									id="keepModalLabel">
 									<div><i class="mdi mdi-eye-outline"></i> {{ keep?.views }}</div>
 									<div><i class="mdi mdi-heart-box-outline"></i> {{ keep?.kept }}</div>
 								</div>
 
 
-								<div class="px-4 px-lg-5 pt-3 pt-lg-4 mt-3">
+								<div class="px-4 px-lg-5 pt-1 pt-lg-4 mt-3">
 									<div class="pt-lg-4">
 										<div class="fw-bold fs-1 text-center py-3 my-auto markoOne">{{ keep?.name }}</div>
 
 										<div class="lh-lg grayText pb-5 my-auto">{{ keep?.description }}</div>
 									</div>
 
-									<section class="pt-4 pb-3">
+									<section class="pt-3 pb-3">
 										<div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
 											<!-- <span v-if="isCreator" class="d-flex align-items-center gap-2 row">
 												<button class="btn btn-danger col-2" data-bs-dismiss="modal"
@@ -117,18 +117,32 @@ async function destroyKeep() {
 }
 
 .modalRadius {
-	border-radius: 25px !important;
+	/* border-radius: 10px !important; */
 }
 
 .modalImg {
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+
+	width: 100%;
+	height: 100%;
+	/* max-width: 35em; */
+	max-height: 45em;
+
+	object-fit: cover;
 }
 
 @media screen and (max-width: 991px) {
 	.modalImg {
 		border-top-left-radius: 0px;
 		border-bottom-left-radius: 0px;
+
+		width: 100%;
+		height: 100%;
+		/* max-width: 35em; */
+		/* max-height: 35em; */
+
+		object-fit: cover;
 	}
 }
 
