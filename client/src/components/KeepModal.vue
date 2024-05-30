@@ -138,10 +138,6 @@ async function destroyKeep() {
 	padding-right: 0px !important;
 }
 
-.grayText {
-	color: rgb(98, 98, 98);
-}
-
 .closeBtn {
 	color: white;
 	background-color: rgb(130, 130, 255);

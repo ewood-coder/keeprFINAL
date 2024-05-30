@@ -71,13 +71,28 @@ public class KeepsRepository
 			keeps.*,
 			accounts.*
 			FROM keeps
-			JOIN accounts ON accounts.id = keeps.creatorId
+			JOIN accounts ON accounts.id = keeps.creatorId			
 			WHERE keeps.id = @keepId;";
 
 		Keep keep = _db.Query<Keep, Profile, Keep>(sql, PopulateCreator, new { keepId }).FirstOrDefault();
-
+		int kept = GetKeptCount(keepId);
+		keep.Kept = kept;
 		return keep;
 	}
+
+	internal int GetKeptCount(int keepId)
+	{
+		string sql = @"
+			SELECT
+			COUNT(vaultKeeps.id) as kept
+			FROM vaultKeeps
+			WHERE keepId = @keepId;";
+
+		int kept = _db.Query<int>(sql, new { keepId }).FirstOrDefault();
+
+		return kept;
+	}
+
 
 
 

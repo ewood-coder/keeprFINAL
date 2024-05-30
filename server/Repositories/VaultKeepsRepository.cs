@@ -9,11 +9,14 @@ namespace keeprFINAL.Repositories;
 public class VaultKeepsRepository
 {
 	private readonly IDbConnection _db;
+	private readonly KeepsRepository _keepsRepository;
 
-	public VaultKeepsRepository(IDbConnection db)
+	public VaultKeepsRepository(IDbConnection db, KeepsRepository keepsRepository)
 	{
 		_db = db;
+		_keepsRepository = keepsRepository;
 	}
+
 
 
 	// SECTION: FUNCTIONS ---------------------------------------------
@@ -41,13 +44,13 @@ public class VaultKeepsRepository
 			vaultKeeps(creatorId, keepId, vaultId)
 			VALUES(@CreatorId, @KeepId, @VaultId);
 			
-			SELECT * FROM vaultKeeps
-			WHERE id = LAST_INSERT_ID();";
+			SELECT * FROM vaultKeeps WHERE id = LAST_INSERT_ID();";
 
 		VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, vaultKeepData).FirstOrDefault();
-
+		int Kept = _keepsRepository.GetKeptCount(vaultKeep.KeepId);
 
 		return vaultKeep;
+
 	}
 
 

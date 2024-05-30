@@ -6,6 +6,7 @@ import { keepsService } from '../services/KeepsService.js';
 import { Vault } from '../models/Vault.js';
 import { vaultsService } from '../services/VaultsService.js';
 import { AppState } from '../AppState.js';
+import { RouterLink } from 'vue-router';
 
 
 const account = computed(() => AppState.account)
@@ -20,11 +21,6 @@ const props = defineProps({
 
 
 // STUB: FUNCTIONS: -----------------------------------
-
-async function setActiveVault() {
-	console.log('setting active vault', props.vault)
-	await vaultsService.setActiveVault(props.vault)
-}
 
 async function destroyVault(vaultId) {
 	try {
@@ -48,8 +44,10 @@ async function destroyVault(vaultId) {
 <template>
 	<div class="vault-card rounded-4 mask1">
 
-		<img :src="vault.img" :alt="vault.name" role="button" @click="setActiveVault()"
-			:title="`image of vault with name: ${vault.name}`" class="vault-img">
+		<router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
+			<img :src="vault.img" :alt="vault.name" role="button" :title="`image of vault with name: ${vault.name}`"
+				class="vault-img">
+		</router-link>
 
 		<div class="px-1 px-md-4 py-2 bgColor d-flex align-items-center flex-wrap gap-3">
 			<div class="px-2 py-1 fs-5 text-capitalize quando">{{ vault.name }}</div>

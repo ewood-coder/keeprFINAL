@@ -69,13 +69,13 @@ async function createKeep() {
 
 						<div class="form-floating mb-4">
 							<input v-model="editableKeepData.img" type="url" class="form-control" id="keepUrl"
-								placeholder="Keep Thumbnail" maxlength="500">
+								placeholder="Keep Thumbnail" required maxlength="500">
 							<label for="keepUrl">Insert Image Address...</label>
 						</div>
 
 						<div class="form-floating mb-4">
 							<textarea v-model="editableKeepData.description" type="String" class="form-control rows"
-								id="keepDescription" placeholder="Keep Description" required maxlength="1000">
+								id="keepDescription" placeholder="Keep Description" maxlength="1000">
 							</textarea>
 							<label for="keepDescription">Description...</label>
 						</div>

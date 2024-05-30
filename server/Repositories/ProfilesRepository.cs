@@ -29,10 +29,13 @@ public class ProfilesRepository
 		string sql = @"
 			SELECT 
 			keeps.*,
-			accounts.* 
+			COUNT(vaultKeeps.id) as kept,
+			accounts.*
 			FROM keeps 
 			JOIN accounts ON accounts.id = keeps.creatorId
-			WHERE keeps.creatorId = @profileId;";
+			LEFT JOIN vaultKeeps on keeps.id = vaultKeeps.keepId
+			WHERE keeps.creatorId = @profileId
+			GROUP BY keeps.id, accounts.id;";
 
 
 		List<Keep> userKeeps = _profileRepository.Query<Keep, Profile, Keep>(sql, (keep, profile) =>

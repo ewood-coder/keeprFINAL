@@ -5,6 +5,7 @@ import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
 import KeepCard from '../components/KeepCard.vue';
 import { keepsService } from '../services/KeepsService.js';
+import { Vault } from '../models/Vault.js';
 import VaultCard from '../components/VaultCard.vue';
 import { vaultsService } from '../services/VaultsService.js';
 import { profilesService } from '../services/ProfilesService.js';
@@ -13,6 +14,7 @@ import { accountService } from '../services/AccountService.js';
 
 
 const account = computed(() => AppState.account)
+const vault = computed(() => AppState.activeVault)
 const profile = computed(() => AppState.activeProfile)
 const profileKeeps = computed(() => AppState.profileKeeps)
 const profileVaults = computed(() => AppState.profileVaults)
@@ -20,38 +22,22 @@ const profileVaults = computed(() => AppState.profileVaults)
 const route = useRoute()
 
 
-async function getProfile() {
-	try {
-		await profilesService.getProfile(route.params.profileId)
-	} catch (error) {
-		Pop.toast("could not get profile", 'error'),
-			console.error(error)
-	}
-}
+// STUB: FUNCTIONS: -----------------------------------
 
-async function getProfileKeeps() {
+async function getVaultKeeps() {
 	try {
-		await keepsService.getProfileKeeps(route.params.profileId)
+		await keepsService.getVaultKeeps(route.params.profileId)
 	} catch (error) {
-		Pop.toast("Could not get profile's keeps", 'error')
+		Pop.toast("Could not get vault's keeps", 'error')
 		console.error(error)
 	}
 }
+// ---------------------------------------------------
 
-async function getProfileVaults() {
-	try {
-		await vaultsService.getProfileVaults(route.params.profileId)
-	} catch (error) {
-		Pop.toast("Could not get profile vaults", 'error')
-		console.error(error)
-	}
-}
 
 onMounted(() => {
-	// AppState.useProfile = true
-	getProfile()
-	getProfileKeeps()
-	getProfileVaults()
+	getVaultKeeps()
+	vaultsService.setActiveVault(route.params.vaultId)
 })
 
 </script>
@@ -62,10 +48,10 @@ onMounted(() => {
 
 		<div class="container-fluid mt-2">
 			<!-- NOTE v-if keeps the profile from trying to draw, before the network response is back -->
-			<section class="row" v-if="profile">
+			<section class="row" v-if="vault">
 
-				<div v-if="profile.coverImg">
-					<img class="cover-img" :src="profile.coverImg" :alt="`picture of ${profile.name}'s cover image`">
+				<div v-if="vault.Img">
+					<img class="cover-img" :src="vault.Img" :alt="`thumbnail of the ${vault.name} vault`">
 				</div>
 
 				<div v-else>
@@ -75,34 +61,23 @@ onMounted(() => {
 				</div>
 
 				<div class="col-12 text-center">
-					<span>
-						<img class="profile-img roundedImg p-1" :src="profile.picture" :alt="`picture of ${profile.name}`">
-					</span>
-					<div class="mt-2 fs-2 fw-bold markoOne">{{ profile.name }}</div>
+					<div class="mt-2 fs-2 fw-bold markoOne">{{ vault.name }}</div>
 
-					<div class="fs-5">{{ profileKeeps.length }} Keeps | {{ profileVaults.length }} Vaults</div>
+					<div class="fs-5">{{ vaultKeeps.length }} Keeps</div>
 				</div>
 			</section>
 		</div>
 
 		<div class="container-fluid mt-3 px-md-4 px-lg-5">
-			<section class="row justify-content-center">
-				<div class="mt-5 mb-4 fs-1 fw-semibold">Vaults</div>
-
-				<div v-for="vault in profileVaults" :key="vault.id" class="col-6 col-md-4 col-lg-3 mb-5">
-					<VaultCard :vault="vault" />
-				</div>
-			</section>
-
-			<hr />
 
 			<section class="row justify-content-center">
-				<div class="mt-5 mb-4 fs-1 fw-semibold">Keeps</div>
+				<div class="mt-5 mb-4 fs-1 fw-semibold">Keeps in {{ vault.name }}</div>
 
 				<div v-for="keep in profileKeeps" :key="keep.id" class="col-6 col-md-4 col-lg-3 mb-5">
 					<KeepCard :keep="keep" />
 				</div>
 			</section>
+
 		</div>
 
 	</main>

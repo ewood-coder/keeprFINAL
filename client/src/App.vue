@@ -41,6 +41,10 @@ import CreateVaultModal from './components/CreateVaultModal.vue';
 	--bgRed: #da0000;
 }
 
+.grayText {
+	color: rgb(98, 98, 98);
+}
+
 .createBtn {
 	background-color: var(--bgLightBlue);
 	border: none;

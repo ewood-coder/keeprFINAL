@@ -69,7 +69,7 @@ async function createVault() {
 
 						<div class="form-floating mb-4">
 							<input v-model="editableVaultData.img" type="url" class="form-control" id="vaultUrl"
-								placeholder="Vault Thumbnail" maxlength="500">
+								placeholder="Vault Thumbnail" required maxlength="500">
 							<label for="vaultUrl">Insert Image Address...</label>
 						</div>
 
@@ -79,6 +79,10 @@ async function createVault() {
 							</textarea>
 							<label for="vaultDescription">Description...</label>
 						</div> -->
+
+						<div class="grayText d-flex justify-content-center align-items-center">
+							Private vaults can only be seen by you
+						</div>
 
 						<div class="form-floating mb-4">
 							<div class="form-check d-flex justify-content-center align-items-center gap-3 fs-5">
