@@ -76,8 +76,7 @@ onMounted(() => {
 
 				<div class="col-12 text-center">
 					<span>
-						<img class="profile-img mt-3 roundedImg p-1" :src="profile.picture"
-							:alt="`picture of ${profile.name}`">
+						<img class="profile-img roundedImg p-1" :src="profile.picture" :alt="`picture of ${profile.name}`">
 					</span>
 					<div class="mt-2 fs-2 fw-bold markoOne">{{ profile.name }}</div>
 
@@ -90,7 +89,7 @@ onMounted(() => {
 			<section class="row justify-content-center">
 				<div class="mt-5 mb-4 fs-1 fw-semibold">Vaults</div>
 
-				<div v-for="vault in profileVaults" :key="vault.id" class="col-6 col-md-3 mb-5">
+				<div v-for="vault in profileVaults" :key="vault.id" class="col-6 col-md-4 col-lg-3 mb-5">
 					<VaultCard :vault="vault" />
 				</div>
 			</section>
@@ -98,7 +97,7 @@ onMounted(() => {
 			<section class="row justify-content-center">
 				<div class="mt-5 mb-4 fs-1 fw-semibold">Keeps</div>
 
-				<div v-for="keep in profileKeeps" :key="keep.id" class="col-6 col-md-3 mb-5">
+				<div v-for="keep in profileKeeps" :key="keep.id" class="col-6 col-md-4 col-lg-3 mb-5">
 					<KeepCard :keep="keep" />
 				</div>
 			</section>
@@ -111,7 +110,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .cover-img {
 	width: 100%;
-	height: 20vh;
+	height: 25vh;
 	margin-bottom: -10vh;
 	object-fit: cover;
 	object-position: center;

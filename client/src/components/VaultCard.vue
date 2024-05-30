@@ -11,7 +11,7 @@ import { AppState } from '../AppState.js';
 const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
 const vaults = computed(() => AppState.vaults)
-
+const profiles = computed(() => AppState.profiles)
 
 
 const props = defineProps({
@@ -20,25 +20,24 @@ const props = defineProps({
 
 
 // STUB: FUNCTIONS: -----------------------------------
-// async function FavoriteRecipe(recipeId) {
-// 	try {
-// 		await favoritesService.FavoriteRecipe(recipeId)
-// 	} catch (error) {
-// 		Pop.error(error)
-// 	}
-// }
-
-// async function RemoveFavoriteRecipe(favoriteId) {
-// 	try {
-// 		await favoritesService.RemoveFavoriteRecipe(favoriteId)
-// 	} catch (error) {
-// 		Pop.error(error)
-// 	}
-// }
 
 async function setActiveVault() {
 	console.log('setting active vault', props.vault)
 	await vaultsService.setActiveVault(props.vault)
+}
+
+async function destroyVault(vaultId) {
+	try {
+		const res = await Pop.confirm('Are you sure you want to delete this vault?')
+		if (!res) {
+			return
+		}
+		await vaultsService.destroyVault(vaultId)
+		Pop.success('Vault Deleted')
+	}
+	catch (error) {
+		Pop.error(error)
+	}
 }
 
 // ---------------------------------------------------
@@ -52,13 +51,19 @@ async function setActiveVault() {
 		<img :src="vault.img" :alt="vault.name" role="button" @click="setActiveVault()"
 			:title="`image of vault with name: ${vault.name}`" class="vault-img">
 
-		<div class="px-4 py-2 bgColor">
+		<div class="px-1 px-md-4 py-2 bgColor d-flex align-items-center flex-wrap gap-3">
 			<div class="px-2 py-1 fs-5 text-capitalize quando">{{ vault.name }}</div>
 
 
 			<div v-if="vault.isPrivate == true && vault.creatorId == account?.id">
 				<span class="lockBG p-2"><i class="mdi mdi-lock fs-5 mx-auto"></i></span>
 			</div>
+
+
+			<button v-if="vault.creatorId == account?.id" @click="destroyVault(vault.id)" class="btnDelete p-1"
+				:title="`Delete Vault`">
+				<i class="mdi mdi-trash-can-outline fs-4 px-1 px-md-2"></i>
+			</button>
 		</div>
 
 	</div>
@@ -66,6 +71,22 @@ async function setActiveVault() {
 
 
 <style scoped>
+.btnDelete {
+	color: white;
+	background-color: #bf0101;
+	border: solid 1px #bf0101;
+	border-radius: 9999px;
+	transition: 0.4s ease-in-out;
+}
+
+.btnDelete:hover {
+	color: #ffffff;
+	background-color: #e20000;
+	border: solid 1px #bf0101;
+	border-radius: 9999px;
+	transition: 0.4s ease-in-out;
+}
+
 .lockBG {
 	color: black;
 	background-color: white;

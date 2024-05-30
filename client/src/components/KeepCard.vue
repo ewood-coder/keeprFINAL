@@ -18,7 +18,6 @@ const profiles = computed(() => AppState.profiles)
 
 const props = defineProps({
 	keep: { type: Keep, required: true },
-	// profile: { type: Profile, required: true },
 })
 
 
@@ -34,13 +33,13 @@ async function setActiveProfile() {
 	await keepsService.setActiveKeep(props.keep.creator)
 }
 
-async function destroyKeep(keep) {
+async function destroyKeep(keepId) {
 	try {
 		const res = await Pop.confirm('Are you sure you want to delete this keep?')
 		if (!res) {
 			return
 		}
-		await keepsService.destroyKeep(keep.id)
+		await keepsService.destroyKeep(keepId)
 		Pop.success('Keep Deleted')
 	}
 	catch (error) {

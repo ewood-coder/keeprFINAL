@@ -24,6 +24,13 @@ const routes = [
 		beforeEnter: authSettled
   },
   {
+		path: '/vaults/:vaultId',
+		name: 'Vault',
+		component: loadPage('VaultPage'),
+		// Figure out if the user is logged in before loading the page
+		beforeEnter: authSettled
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),

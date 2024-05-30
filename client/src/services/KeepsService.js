@@ -47,6 +47,7 @@ class KeepsService {
     await api.delete(`api/keeps/${keepId}`)
     AppState.activeKeep = null
     AppState.keeps = AppState.keeps.filter(r => r.id != keepId)
+    AppState.profileKeeps = AppState.profileKeeps.filter(r => r.id != keepId)
   }
 }
 

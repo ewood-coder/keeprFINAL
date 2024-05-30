@@ -44,10 +44,11 @@ class VaultsService {
    AppState.activeVault = new Vault(response.data)
   } 
 
-  async deleteVault(vaultId){
+  async destroyVault(vaultId){
     await api.delete(`api/vaults/${vaultId}`)
     AppState.activeVault = null
     AppState.vaults = AppState.vaults.filter(r => r.id != vaultId)
+    AppState.profileVaults = AppState.profileVaults.filter(r => r.id != vaultId)
   }
 }
 
