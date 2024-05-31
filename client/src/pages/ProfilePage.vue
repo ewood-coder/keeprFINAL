@@ -99,8 +99,8 @@ onMounted(() => {
 			<section class="row justify-content-center">
 				<div class="mt-5 mb-4 fs-1 fw-semibold">Keeps</div>
 
-				<div v-for="keep in profileKeeps" :key="keep.id" class="col-6 col-md-4 col-lg-3 mb-5">
-					<KeepCard :keep="keep" />
+				<div class="keeps">
+					<KeepCard :keep="keep" v-for="keep in profileKeeps" :key="keep.id" />
 				</div>
 			</section>
 		</div>
@@ -159,6 +159,24 @@ span>img {
 
 	100% {
 		background-position: 0% 50%;
+	}
+}
+
+.keeps {
+	column-count: 4;
+	column-gap: 1rem;
+	row-gap: 2rem;
+}
+
+@media (max-width: 1200px) {
+	.keeps {
+		column-count: 3;
+	}
+}
+
+@media (max-width: 992px) {
+	.keeps {
+		column-count: 2;
 	}
 }
 </style>

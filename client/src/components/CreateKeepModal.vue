@@ -63,7 +63,7 @@ async function createKeep() {
 
 						<div class="form-floating mb-4">
 							<input v-model="editableKeepData.name" type="String" class="form-control" id="keepName"
-								placeholder="Keep Name" required maxlength="15">
+								placeholder="Keep Name" required maxlength="13">
 							<label for="keepName">Keep Title...</label>
 						</div>
 

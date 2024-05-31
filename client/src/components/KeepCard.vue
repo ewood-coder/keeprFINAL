@@ -8,9 +8,11 @@ import { Profile } from '../models/Profile.js';
 import { profilesService } from '../services/ProfilesService.js';
 import KeepModal from './KeepModal.vue';
 import { AppState } from '../AppState.js';
+import { Vault } from '../models/Vault.js';
 
 
 const account = computed(() => AppState.account)
+
 
 
 const props = defineProps({
@@ -44,32 +46,36 @@ async function destroyKeep(keepId) {
 	}
 }
 
+
+
+
 // ---------------------------------------------------
 
 </script>
 
 
 <template>
-	<div class="keep-card rounded-4 mask1">
+	<div class="keep-card mask1 container1">
 
 		<img :src="keep.img" :alt="keep.name" data-bs-toggle="modal" data-bs-target="#keepModal" role="button"
-			@click="setActiveKeep()" :title="`Information about the keep: ${keep.name}`" class="keep-img">
+			@click="setActiveKeep()" :title="`Information about the keep: ${keep.name}`" class="keep-img rounded">
 
-		<div class="px-4 py-2 bgColor">
-			<div class="px-2 py-1 fontSize text-capitalize markoOne">{{ keep.name }}</div>
+		<div class="bgColor bottom-left">
+			<div class="fs-5 text-capitalize markoOne">{{ keep.name }}</div>
 		</div>
 
 		<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
 			<img :src="keep.creator.picture" :alt="keep.creator.name" role="button"
-				:title="`Profile: ${keep.creator.name}`" class="profile-img">
+				:title="`Profile: ${keep.creator.name}`" class="profile-img top-left">
 		</RouterLink>
 		<!-- @click="setActiveProfile()" -->
 
 
-		<button v-if="keep.creatorId == account?.id" @click="destroyKeep(keep.id)" class="btnDelete p-1"
+		<button v-if="keep.creatorId == account?.id" @click="destroyKeep(keep.id)" class="btnDelete top-right"
 			:title="`Delete Keep`">
-			<i class="mdi mdi-trash-can-outline fs-4 px-1 px-md-2"></i>
+			<i class="mdi mdi-trash-can-outline"></i>
 		</button>
+
 	</div>
 </template>
 
@@ -77,22 +83,26 @@ async function destroyKeep(keepId) {
 <style scoped>
 .btnDelete {
 	color: white;
-	background-color: #bf0101;
-	border: solid 1px #bf0101;
-	border-radius: 9999px;
+	background-color: #e20000;
+	border: solid 1px #e20000;
+	border-radius: 15px;
 	transition: 0.4s ease-in-out;
 }
 
 .btnDelete:hover {
 	color: #ffffff;
-	background-color: #e20000;
-	border: solid 1px #bf0101;
-	border-radius: 9999px;
+	background-color: #ff0000;
+	border: solid 1px #ff0000;
+	border-radius: 5px;
 	transition: 0.4s ease-in-out;
 }
 
+
 .keep-card {
-	/* background-color: #ff9074; */
+	margin-bottom: 20px;
+}
+
+/* .keep-card {
 	background-color: #fdac98;
 
 	color: white;
@@ -101,13 +111,13 @@ async function destroyKeep(keepId) {
 	height: 100%;
 
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-	/* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
-}
+} */
 
 .keep-img {
 	width: 100%;
-	height: 40vh;
+	height: auto;
 	object-fit: cover;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .profile-img {
@@ -121,8 +131,17 @@ async function destroyKeep(keepId) {
 	padding: 2px;
 }
 
-.fontSize {
-	font-size: 20px;
+@media screen and (max-width: 426px) {
+	.profile-img {
+		width: 35px;
+		height: 35px;
+
+		border-radius: 9999px;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+		background-color: white;
+		padding: 2px;
+	}
 }
 
 .filterBox {
@@ -142,4 +161,57 @@ async function destroyKeep(keepId) {
 .mask1 {
 	text-shadow: 1px 1px 1px rgb(0, 0, 0);
 }
+
+
+/* SECTION: TEXT POSITIONS */
+
+.bottom-left {
+	position: absolute;
+	bottom: 0px;
+	left: 10px;
+	/* width: 100%; */
+}
+
+@media screen and (max-width: 375px) {
+	.bottom-left {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+	}
+}
+
+.top-left {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+
+.top-right {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.bottom-right {
+	position: absolute;
+	bottom: 8px;
+	right: 16px;
+}
+
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.container1 {
+	position: relative;
+	text-align: center;
+	color: white;
+}
+
+
+/* ----------------------------------- */
 </style>

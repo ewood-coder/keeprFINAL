@@ -63,7 +63,7 @@ async function createVault() {
 
 						<div class="form-floating mb-4">
 							<input v-model="editableVaultData.name" type="String" class="form-control" id="vaultName"
-								placeholder="Vault Name" required maxlength="15">
+								placeholder="Vault Name" required maxlength="13">
 							<label for="vaultName">Vault Title...</label>
 						</div>
 

@@ -24,10 +24,11 @@ public class VaultKeepsRepository
 	// STUB: CREATE VAULTKEEP
 	internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
 	{
+		string vaultId = vaultKeepData.VaultId.ToString();
 		string vaultSQL = @"
-			SELECT * FROM vaults WHERE id = @VaultId;";
+			SELECT * FROM vaults WHERE id = @vaultId;";
 
-		Vault vault = _db.Query<Vault>(vaultSQL, new { vaultId = vaultKeepData.VaultId }).FirstOrDefault();
+		Vault vault = _db.Query<Vault>(vaultSQL, new { vaultId }).FirstOrDefault();
 		if (vault == null)
 		{
 			throw new Exception("Invalid Id");

@@ -46,18 +46,38 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="container-fluid py-5 px-md-5">
 
-		<!-- SECTION: KEEPS -->
-		<section class="d-flex flex-wrap justify-content-center row">
-			<div v-for="keep in keeps" :key="keep.id" class="col-6 col-md-4 col-lg-3 mb-4 px-md-4 py-2">
+	<!-- <div class="-fluid py-4 px-md-5"> -->
 
-				<KeepCard :keep="keep" />
-
-			</div>
-		</section>
-
+	<!-- SECTION: KEEPS -->
+	<!-- <section class="d-flex flex-wrap justify-content-center row"> -->
+	<!-- <div  v-for="keep in keeps" :key="keep.id" class="col-6 col-md-4 col-lg-3 my-3"> -->
+	<div class="keeps py-5 px-2 px-md-5">
+		<KeepCard :keep="keep" v-for="keep in keeps" :key="keep.id" />
 	</div>
+
+	<!-- </div> -->
+	<!-- </section> -->
+
+	<!-- </div> -->
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.keeps {
+	column-count: 4;
+	column-gap: 1rem;
+	row-gap: 2rem;
+}
+
+@media (max-width: 1200px) {
+	.keeps {
+		column-count: 3;
+	}
+}
+
+@media (max-width: 992px) {
+	.keeps {
+		column-count: 2;
+	}
+}
+</style>

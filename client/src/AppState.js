@@ -36,12 +36,9 @@ export const AppState = reactive({
 	myVaults: [],
 
 
-
-  // REVIEW: MAKE SURE THIS DOESN'T BREAK SOMETHING IN THE FUTURE
   
   /** @type {import('./models/Keep.js').Keep[]} vaultKeeps from the database*/
   vaultKeeps: [],
-  //FIXME ^?
   /** @type {import('./models/VaultKeep.js').VaultKeep | null} single vaultKeep from the database*/
   activeVaultKeep: null,
 })

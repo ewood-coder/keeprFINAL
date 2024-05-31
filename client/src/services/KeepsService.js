@@ -6,7 +6,9 @@ import { api } from "./AxiosService.js"
 class KeepsService {
 	async setActiveKeep(keep) {
 		AppState.activeKeep = keep
-		this.getKeepById(keep.id)
+		await this.getKeepById(keep.id)
+  
+    AppState.activeKeep.vaultKeepId = keep.vaultKeepId
 	}
   
   async getKeepById(keepId) {

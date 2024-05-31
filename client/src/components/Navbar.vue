@@ -21,7 +21,7 @@ function toggleTheme() {
 	<nav class="navbar navbar-expand-sm navbar-light bg-light px-3 py-md-4 navbarBoxShadow">
 		<router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
 			<div class="d-flex flex-column align-items-center">
-				<img alt="logo" src="../assets/img/logo.png" height="64" />
+				<img alt="logo" src="../assets/img/keeprLogo.png" height="55" />
 			</div>
 		</router-link>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"

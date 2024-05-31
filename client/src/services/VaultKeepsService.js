@@ -24,24 +24,24 @@ class VaultKeepsService {
 //   }
 
  async addKeepToVault(keepId, vaultId){
-    const keepToVaultData = { keepId: keepId, vaultId: vaultId }
+    const keepToVaultData = { keepId: parseInt(keepId), vaultId: vaultId }
     const response = await api.post('api/vaultkeeps', keepToVaultData)
     logger.log("CREATED VAULTKEEP 🖼️🖼️➡️📦", response.data)
 
-   //  AppState.vaultKeeps.push(new VaultKeep(response.data))
+  //  //  AppState.vaultKeeps.push(new VaultKeep(response.data))
 
-    const newVaultKeep = new VaultKeep(response.data)
-    AppState.vaultKeeps.push(newVaultKeep)
+  //   const newVaultKeep = new Keep(response.data)
+  //   AppState.vaultKeeps.push(newVaultKeep)
    }
 
 
   // STUB: DELETE VAULTKEEP
   async removeKeepFromVault(vaultKeepId){
     await api.delete(`api/vaultkeeps/${vaultKeepId}`)
-    AppState.activeVaultKeep = null
 	
     // NOTE: FOR FUTURE ME: This line filters out the deleted item(s) in each array for you after it performs the above function, so you don't have to refresh the page manually to see that its been deleted.
-    AppState.vaultKeeps = AppState.vaultKeeps.filter(keep => keep.id != vaultKeepId)
+    AppState.vaultKeeps = AppState.vaultKeeps.filter(keep => keep.id != AppState.activeKeep.id)
+    AppState.activeKeep.vaultKeepId =null
   }
 }
 

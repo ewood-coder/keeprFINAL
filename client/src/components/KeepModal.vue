@@ -7,14 +7,16 @@ import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
 import { Vault } from '../models/Vault.js';
 import { vaultsService } from '../services/VaultsService.js';
+import { vaultKeepsService } from '../services/VaultKeepsService.js';
 
 
 const keep = computed(() => AppState.activeKeep)
 const account = computed(() => AppState.account)
 const profileVaults = computed(() => AppState.profileVaults)
 const myVaults = computed(() => AppState.myVaults)
-const isKept = computed(() => AppState.account?.id === keep.value?.kept)
+const isKept = computed(() => isCreatorOfVault.value && keep.value?.vaultKeepId)
 const isCreator = computed(() => AppState.account?.id === keep.value?.creatorId)
+const isCreatorOfVault = computed(() => AppState.account?.id === AppState.activeVault?.creatorId)
 
 const route = useRoute()
 
@@ -35,19 +37,33 @@ async function destroyKeep() {
 	}
 }
 
-// async function getProfileVaults() {
-// 	try {
-// 		await vaultsService.getProfileVaults(route.params.profileId)
-// 	} catch (error) {
-// 		Pop.toast("Could not get profile vaults", 'error')
-// 		console.error(error)
-// 	}
-// }
-// -----------------------------------------------------
+let selectedVaultId = ref('')
+async function saveToVault(event) {
+	const vaultId = event.target.value
+	if (vaultId == '') return
+	try {
+		await vaultKeepsService.addKeepToVault(AppState.activeKeep.id, vaultId)
+		Pop.success('Keep Saved to Vault 📥')
+		AppState.activeKeep.kept++
+		selectedVaultId.value = ''
 
-// onMounted(() => {
-// 	getProfileVaults()
-// })
+	}
+	catch (error) {
+		Pop.error(error)
+	}
+}
+
+async function removeFromVault() {
+	try {
+		await vaultKeepsService.removeKeepFromVault(keep.value.vaultKeepId)
+		Pop.success('Keep Removed from Vault 📤')
+		AppState.activeKeep.kept--
+	}
+	catch (error) {
+		Pop.error(error)
+	}
+}
+
 
 </script>
 
@@ -65,8 +81,8 @@ async function destroyKeep() {
 								<img :src="keep?.img" :alt="`image of ${keep?.name}`" class="modalImg">
 							</div>
 
-							<div class="col-12 col-lg-6 outer">
-								<div class="fs-5 gap-3 grayText px-2 pt-4 pb-2 py-md-4 row" id="keepModalLabel">
+							<div class="col-12 col-lg-6 outer d-flex flex-column justify-content-between ">
+								<div class="fs-5 gap-3 grayText px-2 pt-4 " id="keepModalLabel">
 									<div class="d-flex justify-content-center fs-5 gap-3">
 										<i class="mdi mdi-eye-outline">&nbsp;{{ keep?.views }}</i>
 										<i class="mdi mdi-heart-box-outline">&nbsp;{{ keep?.kept }}</i>
@@ -74,8 +90,8 @@ async function destroyKeep() {
 								</div>
 
 
-								<div class="px-5 pt-1 pt-lg-4 mt-3 row">
-									<div class="pt-lg-4">
+								<div class="px-5 ">
+									<div class="">
 										<div class="fw-bold fs-1 text-center py-3 my-auto markoOne">
 											{{ keep?.name }}
 										</div>
@@ -87,50 +103,54 @@ async function destroyKeep() {
 										</div>
 									</div>
 
-									<section class="pt-3 pb-3 inner">
-										<div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-											<!-- <span v-if="isCreator" class="d-flex align-items-center gap-2 row">
-												<button class="btn btn-danger col-2" data-bs-dismiss="modal"
-													@click="destroyKeep">Delete</button>
-											</span> -->
-											<div class="pe-4" v-if="keep">
-												<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
-													<img :src="keep?.creator.picture" :alt="keep.creator.name" role="button"
-														:title="`Profile: ${keep.creator.name}`" data-bs-dismiss="modal"
-														class="profileImg">
-												</RouterLink>
-												<span class="ps-2">{{ keep?.creator.name }}</span>
-											</div>
+								</div>
+								<section class="pt-3 pb-3 inner">
+									<div class="d-flex align-items-center justify-content-between flex-wrap gap-3 px-3">
+										<!-- <span v-if="isCreator" class="d-flex align-items-center gap-2 row">
+											<button class="btn btn-danger col-2" data-bs-dismiss="modal"
+												@click="destroyKeep">Delete</button>
+										</span> -->
+										<div class="" v-if="keep">
+											<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
+												<img :src="keep?.creator.picture" :alt="keep.creator.name" role="button"
+													:title="`Profile: ${keep.creator.name}`" data-bs-dismiss="modal"
+													class="profileImg">
+											</RouterLink>
+											<span class="ps-2">{{ keep?.creator.name }}</span>
+										</div>
 
-											<div class="d-flex justify-content-between gap-2">
-												<div v-if="account == null"></div>
+										<div class="d-flex justify-content-between gap-2 ">
+											<div v-if="account == null"></div>
 
-												<div v-if="account">
+											<div v-if="account">
 
-													<div v-if="!isKept">
-														<select class="form-select text-dark text-uppercase"
-															aria-label="Default select example">
-															<option selected disabled>Save To Vault</option>
-															<option v-for="vault in myVaults" :key="vault.id" class="text-capitalize"
-																:value="`${vault.id}`">
-																{{ vault.name }}
-															</option>
-														</select>
-													</div>
+												<div v-if="!isKept">
 
-
-													<div v-else>
-														<button class="btn btn-danger me-3" type="button">Remove from vault</button>
-													</div>
+													<select class="form-select text-dark text-uppercase"
+														aria-label="Default select example" @change="saveToVault"
+														v-model="selectedVaultId">
+														<option selected disabled value="">Save To Vault</option>
+														<option v-for="vault in myVaults" :key="vault.id" class="text-capitalize"
+															:value="`${vault.id}`">
+															{{ vault.name }}
+														</option>
+													</select>
 
 												</div>
 
-												<button type="button" class="btn closeBtn" data-bs-dismiss="modal">Close</button>
+
+												<div v-else>
+													<button class="btn btn-danger me-3" data-bs-dismiss="modal"
+														@click="removeFromVault" type="button">Remove from vault</button>
+												</div>
 
 											</div>
+
+											<button type="button" class="btn closeBtn" data-bs-dismiss="modal">Close</button>
+
 										</div>
-									</section>
-								</div>
+									</div>
+								</section>
 							</div>
 						</section>
 					</div>
@@ -151,40 +171,40 @@ async function destroyKeep() {
 	text-align: left;
 }
 
-.outer {
-	position: relative;
-	padding-bottom: 80px;
-}
+/* .outer { */
+/* position: relative; */
+/* padding-bottom: 80px; */
+/* } */
 
-.inner {
+/* .inner {
 	position: absolute;
 	height: 80px;
 	width: 90%;
-	/* padding-left: 10px;
-	padding-right: 10px; */
+
 	left: 2em;
 	right: 0;
 	bottom: 0;
-}
+} */
 
-@media screen and (max-width: 1199px) {
-	.outer {
+/* @media screen and (max-width: 1199px) { */
+/* .outer {
 		position: relative;
 		padding-bottom: 130px;
-	}
+	} */
 
-	.inner {
+/* .inner {
 		position: absolute;
 		height: 80px;
-		width: 90%;
-		/* padding-left: 10px;
+		width: 90%; */
+/* padding-left: 10px;
 	padding-right: 10px; */
-		left: 2em;
+/* left: 2em;
 		right: 0;
 		bottom: 50px;
-	}
-}
+	} */
+/* } */
 
+/* 
 @media screen and (max-width: 374px) {
 
 	.inner {
@@ -193,11 +213,11 @@ async function destroyKeep() {
 		width: 90%;
 		/* padding-left: 10px;
 	padding-right: 10px; */
-		left: 1em;
-		right: 0;
-		bottom: 50px;
-	}
+/* left: 1em;
+right: 0;
+bottom: 50px;
 }
+} */
 
 .modalImg {
 	border-top-left-radius: 5px;
