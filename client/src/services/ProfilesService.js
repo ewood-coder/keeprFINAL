@@ -14,6 +14,11 @@ class ProfilesService {
 	// 	console.log(response.data)
 	// }
 
+	async setActiveProfile(profile) {
+		AppState.activeProfile = profile
+		this.setActiveProfile(profile.id)
+	}
+
 	async getProfile(profileId) {
 		AppState.activeProfile = null
 		const response = await api.get(`api/profiles/${profileId}`)

@@ -47,8 +47,10 @@ class VaultsService {
   async destroyVault(vaultId){
     await api.delete(`api/vaults/${vaultId}`)
     AppState.activeVault = null
-    AppState.vaults = AppState.vaults.filter(r => r.id != vaultId)
-    AppState.profileVaults = AppState.profileVaults.filter(r => r.id != vaultId)
+
+    // NOTE: FOR FUTURE ME: This line filters out the deleted item(s) in each array for you after it performs the above function, so you don't have to refresh the page manually to see that its been deleted.
+    AppState.vaults = AppState.vaults.filter(vault => vault.id != vaultId)
+    AppState.profileVaults = AppState.profileVaults.filter(vault => vault.id != vaultId)
   }
 }
 

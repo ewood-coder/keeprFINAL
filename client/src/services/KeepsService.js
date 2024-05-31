@@ -46,8 +46,11 @@ class KeepsService {
   async destroyKeep(keepId){
     await api.delete(`api/keeps/${keepId}`)
     AppState.activeKeep = null
-    AppState.keeps = AppState.keeps.filter(r => r.id != keepId)
-    AppState.profileKeeps = AppState.profileKeeps.filter(r => r.id != keepId)
+
+    // NOTE: FOR FUTURE ME: This line filters out the deleted item(s) in each array for you after it performs the above function, so you don't have to refresh the page manually to see that its been deleted.
+    AppState.keeps = AppState.keeps.filter(keep => keep.id != keepId)
+    AppState.profileKeeps = AppState.profileKeeps.filter(keep => keep.id != keepId)
+    AppState.vaultKeeps = AppState.vaultKeeps.filter(keep => keep.id != keepId)
   }
 }
 

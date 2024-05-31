@@ -50,7 +50,6 @@ public class VaultKeepsRepository
 		int Kept = _keepsRepository.GetKeptCount(vaultKeep.KeepId);
 
 		return vaultKeep;
-
 	}
 
 

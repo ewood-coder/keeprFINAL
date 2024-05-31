@@ -2,15 +2,11 @@
 import { computed, effect, onMounted, ref, watchEffect } from 'vue';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
-import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
 import KeepCard from '../components/KeepCard.vue';
-import { Account } from '../models/Account.js';
 
 
-const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
-
 
 
 // STUB: FUNCTIONS: -----------------------------
@@ -22,12 +18,6 @@ async function getKeeps(value) {
 		Pop.error(error)
 	}
 }
-// ----------------------------------------------
-
-onMounted(() => {
-	getKeeps()
-})
-
 
 async function createKeep(event) {
 	event.preventDefault()
@@ -46,6 +36,13 @@ async function createKeep(event) {
 	}
 
 }
+
+// ----------------------------------------------
+
+onMounted(() => {
+	getKeeps()
+})
+
 </script>
 
 <template>
@@ -53,7 +50,7 @@ async function createKeep(event) {
 
 		<!-- SECTION: KEEPS -->
 		<section class="d-flex flex-wrap justify-content-center row">
-			<div v-for="keep in keeps" :key="keep.id" class="col-5 col-md-6 col-lg-4 mb-4 gap-1 px-md-4 py-2">
+			<div v-for="keep in keeps" :key="keep.id" class="col-6 col-md-4 col-lg-3 mb-4 px-md-4 py-2">
 
 				<KeepCard :keep="keep" />
 

@@ -13,11 +13,12 @@ import { Account } from '../models/Account.js';
 import { accountService } from '../services/AccountService.js';
 import { VaultKeep } from '../models/VaultKeep.js';
 import { vaultKeepsService } from '../services/VaultKeepsService.js';
+import { router } from '../router.js';
 
 
 
 
-// const account = computed(() => AppState.account)
+const account = computed(() => AppState.account)
 const vault = computed(() => AppState.activeVault)
 // const keeps = computed(() => AppState.keeps)
 // const keep = computed(() => AppState.activeKeep)
@@ -47,6 +48,7 @@ async function getVaultById() {
 		await vaultsService.getVaultById(route.params.vaultId)
 	} catch (error) {
 		Pop.error(error)
+		router.push({ name: 'Home' })
 	}
 }
 

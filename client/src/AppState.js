@@ -8,32 +8,40 @@ export const AppState = reactive({
   account: null,
 
 
+
   /** @type {import('./models/Profile.js').Profile[]} profiles from the database */
   profiles: [],
   useProfile: false,
   /** @type {import('./models/Profile.js').Profile | null} single profile from the database*/
   activeProfile: null,
-  /** @type {import('./models/Keep.js').Keep[]}  */
-  profileKeeps: [],
-  /** @type {import('./models/Vault.js').Vault[]} */
-  profileVaults: [],
+  
 
 
   /** @type {import('./models/Keep.js').Keep[]} keeps from the database*/
   keeps: [],
   /** @type {import('./models/Keep.js').Keep | null} single keep from the database*/
   activeKeep: null,
+  /** @type {import('./models/Keep.js').Keep[]}  */
+  profileKeeps: [],
+
 
 
   /** @type {import('./models/Vault.js').Vault[]} vaults from the database*/
   vaults: [],
   /** @type {import('./models/Vault.js').Vault | null} single vault from the database*/
   activeVault: null,
+  /** @type {import('./models/Vault.js').Vault[]} */
+  profileVaults: [],
+   /** @type {import('./models/Vault.js').Vault[]} */
+	myVaults: [],
+
+
 
   // REVIEW: MAKE SURE THIS DOESN'T BREAK SOMETHING IN THE FUTURE
-  //FIXME ^?
+  
   /** @type {import('./models/Keep.js').Keep[]} vaultKeeps from the database*/
   vaultKeeps: [],
+  //FIXME ^?
   /** @type {import('./models/VaultKeep.js').VaultKeep | null} single vaultKeep from the database*/
   activeVaultKeep: null,
 })

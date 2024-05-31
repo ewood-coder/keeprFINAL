@@ -1,5 +1,6 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, effect, onMounted, ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop.js';
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
@@ -10,10 +11,6 @@ import { AppState } from '../AppState.js';
 
 
 const account = computed(() => AppState.account)
-const keeps = computed(() => AppState.keeps)
-const profiles = computed(() => AppState.profiles)
-
-
 
 
 const props = defineProps({
@@ -30,7 +27,7 @@ async function setActiveKeep() {
 
 async function setActiveProfile() {
 	console.log('setting active profile', props.keep.creator)
-	await keepsService.setActiveKeep(props.keep.creator)
+	await profilesService.setActiveProfile(props.keep.creator)
 }
 
 async function destroyKeep(keepId) {
@@ -62,8 +59,12 @@ async function destroyKeep(keepId) {
 			<div class="px-2 py-1 fontSize text-capitalize markoOne">{{ keep.name }}</div>
 		</div>
 
-		<img :src="keep.creator.picture" :alt="keep.creator.name" role="button" @click="setActiveProfile()"
-			:title="`Profile: ${keep.creator.name}`" class="profile-img">
+		<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
+			<img :src="keep.creator.picture" :alt="keep.creator.name" role="button"
+				:title="`Profile: ${keep.creator.name}`" class="profile-img">
+		</RouterLink>
+		<!-- @click="setActiveProfile()" -->
+
 
 		<button v-if="keep.creatorId == account?.id" @click="destroyKeep(keep.id)" class="btnDelete p-1"
 			:title="`Delete Keep`">

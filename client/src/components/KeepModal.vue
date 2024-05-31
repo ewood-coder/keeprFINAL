@@ -1,14 +1,23 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, effect, onMounted, ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
 import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
 import { Keep } from '../models/Keep.js';
 import { keepsService } from '../services/KeepsService.js';
+import { Vault } from '../models/Vault.js';
+import { vaultsService } from '../services/VaultsService.js';
+
 
 const keep = computed(() => AppState.activeKeep)
 const account = computed(() => AppState.account)
+const profileVaults = computed(() => AppState.profileVaults)
+const myVaults = computed(() => AppState.myVaults)
 const isKept = computed(() => AppState.account?.id === keep.value?.kept)
 const isCreator = computed(() => AppState.account?.id === keep.value?.creatorId)
+
+const route = useRoute()
+
 
 // STUB: FUNCTIONS: -----------------------------------
 
@@ -25,9 +34,20 @@ async function destroyKeep() {
 		Pop.error(error)
 	}
 }
+
+// async function getProfileVaults() {
+// 	try {
+// 		await vaultsService.getProfileVaults(route.params.profileId)
+// 	} catch (error) {
+// 		Pop.toast("Could not get profile vaults", 'error')
+// 		console.error(error)
+// 	}
+// }
 // -----------------------------------------------------
 
-
+// onMounted(() => {
+// 	getProfileVaults()
+// })
 
 </script>
 
@@ -45,49 +65,64 @@ async function destroyKeep() {
 								<img :src="keep?.img" :alt="`image of ${keep?.name}`" class="modalImg">
 							</div>
 
-							<div class="col-12 col-lg-6">
-								<div class="fs-5 gap-3 fs-4 d-flex justify-content-center grayText px-2 pt-4 pb-2 py-md-4"
-									id="keepModalLabel">
-									<div><i class="mdi mdi-eye-outline"></i> {{ keep?.views }}</div>
-									<div><i class="mdi mdi-heart-box-outline"></i> {{ keep?.kept }}</div>
+							<div class="col-12 col-lg-6 outer">
+								<div class="fs-5 gap-3 grayText px-2 pt-4 pb-2 py-md-4 row" id="keepModalLabel">
+									<div class="d-flex justify-content-center fs-5 gap-3">
+										<i class="mdi mdi-eye-outline">&nbsp;{{ keep?.views }}</i>
+										<i class="mdi mdi-heart-box-outline">&nbsp;{{ keep?.kept }}</i>
+									</div>
 								</div>
 
 
-								<div class="px-4 px-lg-5 pt-1 pt-lg-4 mt-3">
+								<div class="px-5 pt-1 pt-lg-4 mt-3 row">
 									<div class="pt-lg-4">
-										<div class="fw-bold fs-1 text-center py-3 my-auto markoOne">{{ keep?.name }}</div>
+										<div class="fw-bold fs-1 text-center py-3 my-auto markoOne">
+											{{ keep?.name }}
+										</div>
 
-										<div class="lh-lg grayText pb-5 my-auto">{{ keep?.description }}</div>
+										<div class="lh-lg grayText pb-5 my-auto txtCenter">
+											<div class="txtLeft">
+												{{ keep?.description }}
+											</div>
+										</div>
 									</div>
 
-									<section class="pt-3 pb-3">
+									<section class="pt-3 pb-3 inner">
 										<div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
 											<!-- <span v-if="isCreator" class="d-flex align-items-center gap-2 row">
 												<button class="btn btn-danger col-2" data-bs-dismiss="modal"
 													@click="destroyKeep">Delete</button>
 											</span> -->
-											<div class="pe-4">
-												<img :src="keep?.creator.picture" alt="" class="profileImg">
+											<div class="pe-4" v-if="keep">
+												<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
+													<img :src="keep?.creator.picture" :alt="keep.creator.name" role="button"
+														:title="`Profile: ${keep.creator.name}`" data-bs-dismiss="modal"
+														class="profileImg">
+												</RouterLink>
 												<span class="ps-2">{{ keep?.creator.name }}</span>
 											</div>
 
 											<div class="d-flex justify-content-between gap-2">
 												<div v-if="account == null"></div>
 
-												<div v-else>
-													<div class="dropdown-center">
-														<button
-															class="btn hoverBG text-dark lighten-30 text-uppercase dropdown-toggle"
-															type="button" data-bs-toggle="dropdown" aria-expanded="false">
-															Save To Vault
-														</button>
-														<ul class="dropdown-menu dropdown-menu-dark">
-															<li>
-																<a class="dropdown-item" href="createKeepModal">Vault Name</a>
-																<hr class="my-1" />
-															</li>
-														</ul>
+												<div v-if="account">
+
+													<div v-if="!isKept">
+														<select class="form-select text-dark text-uppercase"
+															aria-label="Default select example">
+															<option selected disabled>Save To Vault</option>
+															<option v-for="vault in myVaults" :key="vault.id" class="text-capitalize"
+																:value="`${vault.id}`">
+																{{ vault.name }}
+															</option>
+														</select>
 													</div>
+
+
+													<div v-else>
+														<button class="btn btn-danger me-3" type="button">Remove from vault</button>
+													</div>
+
 												</div>
 
 												<button type="button" class="btn closeBtn" data-bs-dismiss="modal">Close</button>
@@ -107,17 +142,61 @@ async function destroyKeep() {
 
 
 <style scoped>
-.hoverBG {
-	border: solid 1px black;
+.txtCenter {
+	text-align: center;
 }
 
-.hoverBG:hover {
-	border: solid 1px black;
-	background-color: rgb(225, 225, 225);
+.txtLeft {
+	display: inline-block;
+	text-align: left;
 }
 
-.modalRadius {
-	/* border-radius: 10px !important; */
+.outer {
+	position: relative;
+	padding-bottom: 80px;
+}
+
+.inner {
+	position: absolute;
+	height: 80px;
+	width: 90%;
+	/* padding-left: 10px;
+	padding-right: 10px; */
+	left: 2em;
+	right: 0;
+	bottom: 0;
+}
+
+@media screen and (max-width: 1199px) {
+	.outer {
+		position: relative;
+		padding-bottom: 130px;
+	}
+
+	.inner {
+		position: absolute;
+		height: 80px;
+		width: 90%;
+		/* padding-left: 10px;
+	padding-right: 10px; */
+		left: 2em;
+		right: 0;
+		bottom: 50px;
+	}
+}
+
+@media screen and (max-width: 374px) {
+
+	.inner {
+		position: absolute;
+		height: 80px;
+		width: 90%;
+		/* padding-left: 10px;
+	padding-right: 10px; */
+		left: 1em;
+		right: 0;
+		bottom: 50px;
+	}
 }
 
 .modalImg {
