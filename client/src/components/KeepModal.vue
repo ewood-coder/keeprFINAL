@@ -84,8 +84,11 @@ async function removeFromVault() {
 							<div class="col-12 col-lg-6 outer d-flex flex-column justify-content-between ">
 								<div class="fs-5 gap-3 grayText px-2 pt-4 " id="keepModalLabel">
 									<div class="d-flex justify-content-center fs-5 gap-3">
-										<i class="mdi mdi-eye-outline">&nbsp;{{ keep?.views }}</i>
-										<i class="mdi mdi-heart-box-outline">&nbsp;{{ keep?.kept }}</i>
+										<i class="mdi mdi-eye-outline" :title="`Times viewed: ${keep?.views}`">&nbsp;{{
+											keep?.views }}</i>
+										<i class="mdi mdi-heart-box-outline"
+											:title="`Times kept in vault: ${keep?.kept}`">&nbsp;{{
+												keep?.kept }}</i>
 									</div>
 								</div>
 
