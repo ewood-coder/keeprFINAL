@@ -1,9 +1,15 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
+import { Account } from '../models/Account.js';
 import Login from './Login.vue';
+import { AppState } from '../AppState.js';
 
 const theme = ref(loadState('theme') || 'light')
+
+
+
+const account = computed(() => AppState.account)
 
 onMounted(() => {
 	document.documentElement.setAttribute('data-bs-theme', theme.value)
@@ -38,7 +44,7 @@ function toggleTheme() {
 				</li>
 
 				<li class="mx-auto">
-					<div class="dropdown-center">
+					<div v-if="account" class="dropdown-center">
 						<button class="btn hoverBG text-dark lighten-30 text-uppercase dropdown-toggle" type="button"
 							data-bs-toggle="dropdown" aria-expanded="false">
 							Create

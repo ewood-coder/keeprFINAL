@@ -60,29 +60,35 @@ onMounted(() => {
 
 		<div class="container-fluid mt-2">
 			<!-- NOTE v-if keeps the profile from trying to draw, before the network response is back -->
-			<section class="row" v-if="vault">
+			<section class="row justify-content-center" v-if="vault">
 
-				<div v-if="vault.img" class="d-flex justify-content-center">
+				<div v-if="vault?.img" class="d-flex justify-content-center container1">
 					<img class="cover-img" :src="vault.img" :alt="`thumbnail of the ${vault.name} vault`">
+
+					<div class="mt-2 fs-1 fw-bold markoOne mask1 text-white centered1">{{ vault.name }}</div>
+					<div class="mb-2 fs-4 mask1 text-white centered2">by: {{ vault.creator.name }}</div>
 				</div>
 
-				<div v-else class="d-flex justify-content-center">
+				<div v-else class="d-flex justify-content-center container1">
 					<img class="cover-img"
 						src="https://preview.redd.it/art-mountains-oceans-cover-art-v0-jpj8uj9fzkfa1.jpg?auto=webp&s=beae04b18d2ef2164ae9bf334215f5c91d838262"
 						alt="cover image placeholder of mountains">
+
+					<div class="mt-2 fs-2 fw-bold markoOne mask1 text-white centered1">{{ vault.name }}</div>
+					<div class="mb-2 fs-5 mask1 text-white centered2">by: {{ vault.creator.name }}</div>
 				</div>
 
-				<div class="col-12 text-center">
-					<div>
+				<div class="col-4 col-md-2 col-xl-1 pt-3">
+					<!-- <div class="mask1 text-white centered">
 						<div class="mt-2 fs-2 fw-bold markoOne">{{ vault.name }}</div>
-						<div class="mb-2 fs-5 grayText">by: {{ vault.creator.name }}</div>
-					</div>
+						<div class="mb-2 fs-5">by: {{ vault.creator.name }}</div>
+					</div> -->
 
 					<div v-if="vaultKeeps.length == 1">
-						<div class="fs-5 mb-3">{{ vaultKeeps.length }} Keep</div>
+						<div class="fs-5 mb-3 filterBox fw-semibold">{{ vaultKeeps.length }} Keep</div>
 					</div>
 					<div v-else>
-						<div class="fs-5 mb-3">{{ vaultKeeps.length }} Keeps</div>
+						<div class="fs-5 mb-3 filterBox fw-semibold">{{ vaultKeeps.length }} Keeps</div>
 					</div>
 				</div>
 			</section>
@@ -91,7 +97,6 @@ onMounted(() => {
 		<div class="container-fluid my-5 px-md-4 px-lg-5">
 
 			<section class="row justify-content-center">
-				<!-- <div class="mt-5 mb-4 fs-1 fw-semibold">Keeps in "{{ vault?.name }}"</div> -->
 				<hr class="pb-4" />
 
 				<div v-if="vaultKeeps.length == 1" class="px-1 px-md-0 row justify-content-center justify-content-md-start">
@@ -114,6 +119,78 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+.mask1 {
+	text-shadow: 2px 2px 2px rgb(0, 0, 0);
+}
+
+.filterBox {
+	background-color: #dad6ff;
+	backdrop-filter: blur(15px);
+	border-radius: 12px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* SECTION: TEXT POSITIONS */
+
+.bottom-left {
+	position: absolute;
+	bottom: 0px;
+	left: 10px;
+	/* width: 100%; */
+}
+
+@media screen and (max-width: 375px) {
+	.bottom-left {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+	}
+}
+
+.top-left {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+
+.top-right {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.bottom-right {
+	position: absolute;
+	bottom: 8px;
+	right: 16px;
+}
+
+.centered1 {
+	position: absolute;
+	top: 65%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.centered2 {
+	position: absolute;
+	top: 88%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.container1 {
+	position: relative;
+	text-align: center;
+	color: white;
+}
+
+/* ----------------------------------- */
+
 .cover-img {
 	width: 100%;
 	height: auto;
@@ -125,6 +202,7 @@ onMounted(() => {
 	object-fit: cover;
 	object-position: center;
 	border-radius: 10px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .profile-img {

@@ -85,7 +85,7 @@ onMounted(() => {
 			</section>
 		</div>
 
-		<div class="container-fluid mt-3 px-md-4 px-lg-5">
+		<div class="container-fluid my-5 px-md-4 px-lg-5">
 			<section class="row justify-content-center">
 				<div class="mt-5 mb-4 fs-1 fw-semibold">Vaults</div>
 

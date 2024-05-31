@@ -41,6 +41,10 @@ import CreateVaultModal from './components/CreateVaultModal.vue';
 	--bgRed: #da0000;
 }
 
+.txtShadow {
+	text-shadow: 3px 3px 3px black;
+}
+
 .grayText {
 	color: rgb(98, 98, 98);
 }

@@ -60,8 +60,8 @@ async function destroyKeep(keepId) {
 		<img :src="keep.img" :alt="keep.name" data-bs-toggle="modal" data-bs-target="#keepModal" role="button"
 			@click="setActiveKeep()" :title="`Information about the keep: ${keep.name}`" class="keep-img rounded">
 
-		<div class="bgColor bottom-left">
-			<div class="fs-5 text-capitalize markoOne">{{ keep.name }}</div>
+		<div class="bottom-left">
+			<div class="fs-5 text-capitalize markoOne txtShadow">{{ keep.name }}</div>
 		</div>
 
 		<RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }">
@@ -101,17 +101,6 @@ async function destroyKeep(keepId) {
 .keep-card {
 	margin-bottom: 20px;
 }
-
-/* .keep-card {
-	background-color: #fdac98;
-
-	color: white;
-
-	width: auto;
-	height: 100%;
-
-	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-} */
 
 .keep-img {
 	width: 100%;
@@ -167,7 +156,7 @@ async function destroyKeep(keepId) {
 
 .bottom-left {
 	position: absolute;
-	bottom: 0px;
+	bottom: 5px;
 	left: 10px;
 	/* width: 100%; */
 }
@@ -175,7 +164,7 @@ async function destroyKeep(keepId) {
 @media screen and (max-width: 375px) {
 	.bottom-left {
 		position: absolute;
-		bottom: 0px;
+		bottom: 5px;
 		left: 0px;
 		width: 100%;
 	}
