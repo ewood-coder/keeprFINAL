@@ -76,11 +76,10 @@ onMounted(() => {
 
 				<div class="col-12 text-center mt-1">
 					<span v-if="profile.picture">
-						<img class="profile-img roundedImg p-1 fs-1" :src="profile.picture"
-							:alt="`picture of ${profile.name}`">
+						<img class="profile-img roundedImg p-1" :src="profile.picture" :alt="`picture of ${profile.name}`">
 					</span>
 					<span v-else>
-						<img class="profile-img roundedImg p-1 fs-1"
+						<img class="profile-img roundedImg p-1"
 							src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
 							:alt="`placeholder image of ${profile.name}`">
 					</span>
