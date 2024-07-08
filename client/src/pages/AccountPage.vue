@@ -14,8 +14,14 @@ const account = computed(() => AppState.account)
 			<div v-if="account" class="pt-3">
 				<div class="mask py-1 mx-2 mx-md-5">
 					<div class="fs-1 fw-semibold">Welcome {{ account.name }}</div>
-					<div>
-						<img class="rounded my-2" :src="account.picture" alt="" />
+					<div v-if="account.picture">
+						<img class="rounded my-2" :src="account.picture" :alt="`picture of ${account.name}`" />
+						<p class="fs-5">{{ account.email }}</p>
+					</div>
+					<div v-else>
+						<img class="rounded my-2"
+							src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+							:alt="`placeholder image of ${account.name}`" />
 						<p class="fs-5">{{ account.email }}</p>
 					</div>
 				</div>
@@ -26,17 +32,19 @@ const account = computed(() => AppState.account)
 			</div>
 
 
-			<div v-else class="my-5 mx-auto">
-				<div class="d-flex justify-content-center align-items-center my-5">
-					<div class="loader1"></div>
-				</div>
+			<div v-else class="py-5 mx-auto">
+				<div class="py-1 mx-auto bgTransparent rounded">
+					<div class="d-flex justify-content-center align-items-center my-5">
+						<div class="loader1"></div>
+					</div>
 
-				<div class="d-flex justify-content-center align-items-center">
-					<div class="loader"></div>
-				</div>
+					<div class="d-flex justify-content-center align-items-center">
+						<div class="loader"></div>
+					</div>
 
-				<div class="d-flex justify-content-center align-items-center my-5">
-					<div class="loader2"></div>
+					<div class="d-flex justify-content-center align-items-center my-5">
+						<div class="loader2"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -50,6 +58,11 @@ img {
 	max-width: 100px;
 }
 
+.bgTransparent {
+	background: rgba(255, 255, 255, 0.6);
+	width: 18em;
+}
+
 // STUB: LOADING... LOADER
 .loader {
 	width: fit-content;
@@ -58,6 +71,8 @@ img {
 	font-size: 40px;
 	clip-path: inset(0 3ch 0 0);
 	animation: l4 1s steps(4) infinite;
+
+	color: black;
 }
 
 .loader:before {

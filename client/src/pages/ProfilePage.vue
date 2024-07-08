@@ -74,11 +74,17 @@ onMounted(() => {
 						alt="cover image placeholder of mountains">
 				</div>
 
-				<div class="col-12 text-center">
-					<span>
-						<img class="profile-img roundedImg p-1" :src="profile.picture" :alt="`picture of ${profile.name}`">
+				<div class="col-12 text-center mt-4">
+					<span v-if="profile.picture">
+						<img class="profile-img roundedImg p-1 fs-1" :src="profile.picture"
+							:alt="`picture of ${profile.name}`">
 					</span>
-					<div class="mt-2 fs-2 fw-bold markoOne">{{ profile.name }}</div>
+					<span v-else>
+						<img class="profile-img roundedImg p-1"
+							src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+							:alt="`placeholder image of ${profile.name}`">
+					</span>
+					<div class="mt-3 fs-2 fw-bold markoOne">{{ profile.name }}</div>
 
 					<div class="fs-5">{{ profileKeeps.length }} Keeps | {{ profileVaults.length }} Vaults</div>
 				</div>
