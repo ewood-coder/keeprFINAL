@@ -74,7 +74,7 @@ onMounted(() => {
 						alt="cover image placeholder of mountains">
 				</div>
 
-				<div class="col-12 text-center mt-5">
+				<div class="col-12 text-center mt-3">
 					<span v-if="profile.picture">
 						<img class="profile-img roundedImg p-1" :src="profile.picture" :alt="`picture of ${profile.name}`">
 					</span>
